@@ -1,0 +1,9 @@
+$type: "[data-variant-product-type]";
+
+@mixin base {
+    #{$type} {
+        &[aria-hidden="true"] {
+            display: none;
+        }
+    }
+}

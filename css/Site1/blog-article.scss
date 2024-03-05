@@ -1,0 +1,11 @@
+// interfaces
+@use "interfaces/page";
+@use "interfaces/blog";
+@use "interfaces/product";
+
+@include page.landing-page;
+
+@include blog.blog-article;
+@include blog.blog-category;
+
+@include product.product-listing-page;

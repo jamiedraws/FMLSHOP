@@ -1,0 +1,106 @@
+$select: ".features-benefits" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/list";
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        text-transform: uppercase;
+        font-size: fonts.em(18);
+        line-height: 1.1;
+        font-weight: 500;
+
+        @include background.color-map(
+            $background-color: var(--main-background-color),
+            $text-color: var(--main-text-color)
+        ) {
+            --main-background-color: #443365;
+            --main-text-color: #a490be;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 2rem;
+            padding: 2rem;
+
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+
+            &::before {
+                content: "";
+                display: block;
+                width: 10px;
+            }
+
+            &:nth-child(1) {
+                max-width: 7em;
+
+                &::before {
+                    content: url(/images/Site99/glutten-free.svg);
+                    flex: 0 0 queries.em(35);
+                }
+            }
+
+            &:nth-child(2) {
+                max-width: 7em;
+
+                &::before {
+                    content: url(/images/Site99/100-vegan.svg);
+                    flex: 0 0 queries.em(37);
+                }
+            }
+
+            &:nth-child(3) {
+                max-width: 9em;
+
+                &::before {
+                    content: url(/images/Site99/preservative-free.svg);
+                    flex: 0 0 queries.em(16);
+                }
+            }
+
+            &:nth-child(4) {
+                max-width: 5em;
+
+                &::before {
+                    content: url(/images/Site99/soy-free.svg);
+                    flex: 0 0 queries.em(19);
+                }
+            }
+
+            &:nth-child(5) {
+                max-width: 5em;
+
+                &::before {
+                    content: url(/images/Site99/non-gmo.svg);
+                    flex: 0 0 queries.em(23);
+                }
+            }
+
+            &:nth-child(6) {
+                max-width: 8em;
+
+                &::before {
+                    content: url(/images/Site99/keto-friendly.svg);
+                    flex: 0 0 queries.em(35);
+                }
+            }
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,754 @@
+@use "sass:math";
+
+$select: ".slide" !default;
+
+// layouts
+@use "Shared/scss/templates/base/layouts/slide" with (
+    $select: $select,
+    $desktop: 0em
+);
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/contain";
+
+@mixin base {
+    @include slide.base;
+
+    #{$select} {
+        --carousel-button-color-background: transparent;
+        --carousel-button-color-background-active: var(
+            --carousel-button-color-background
+        );
+        --carousel-button-color-active: #{colors.get(first)};
+        --carousel-button-color-inactive: var(--main-text-color);
+
+        --carousel-length: 100%;
+        --carousel-nav-length: var(--carousel-length);
+
+        --carousel-offset: 0.1em;
+        --carousel-inset: 0.1em;
+
+        max-width: calc(var(--carousel-length) + var(--carousel-offset));
+        margin: auto;
+
+        #{$select} {
+            &__into {
+                max-width: var(--carousel-length);
+                margin: auto;
+            }
+
+            &__nav {
+                max-width: calc(
+                    var(--carousel-nav-length) + var(--carousel-offset) -
+                        var(--carousel-inset)
+                );
+                width: 100%;
+            }
+        }
+
+        &__container {
+            position: relative;
+        }
+
+        &__into {
+            &::-webkit-scrollbar {
+                background: rgba(0, 0, 0, 0);
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0);
+            }
+        }
+
+        &__item {
+            align-items: stretch;
+        }
+
+        &__nav {
+            z-index: 2;
+            width: 100%;
+            pointer-events: none;
+
+            button {
+                pointer-events: all;
+
+                background: var(--carousel-button-color-background);
+                color: var(--carousel-button-color-inactive);
+
+                border: none;
+                box-shadow: none;
+
+                &:hover,
+                &:focus {
+                    color: var(--carousel-button-color-active);
+                    background: var(--carousel-button-color-background-active);
+                }
+
+                > svg {
+                    fill: currentColor;
+                    stroke-width: 0.5px;
+                }
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin small-nav {
+    #{$select} {
+        &--small-nav {
+            --carousel-length: 27em;
+
+            #{$select} {
+                &__nav {
+                    position: static;
+                    display: inline-block;
+                    margin-top: 1em;
+                    font-size: 1em;
+
+                    button {
+                        display: inline-block;
+                        font-size: inherit;
+                        border: none;
+                        box-shadow: none;
+                        color: inherit;
+                        &:hover,
+                        &:focus {
+                            background: none;
+                            color: currentColor;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                &__spacer {
+                    margin: 0 0.25em;
+                }
+
+                &__next {
+                    transform: none;
+                }
+            }
+
+            @media all and (max-width: queries.get(reviews)) {
+                --carousel-length: 90vw;
+
+                #{$select} {
+                    &__nav {
+                        position: sticky;
+                        bottom: 0;
+
+                        margin-top: 0;
+                        padding: 1em 0;
+                        height: auto;
+
+                        background: white;
+                        border-top: 1px solid #ccc;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin product-images {
+    #{$select} {
+        &--product-images {
+            $gap: 0.75rem;
+
+            picture {
+                flex: 1;
+                isolation: isolate;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+            #{$select} {
+                &__thumbnails {
+                    padding-top: calc(#{$gap} * 2);
+
+                    @include group.contain($gap) {
+                        flex: 0 1 calc((100% / 4) - (#{$gap} * 2));
+                    }
+
+                    justify-content: flex-start;
+                }
+
+                &__thumbnail {
+                    position: relative;
+
+                    &:focus {
+                        outline-color: currentColor;
+                    }
+
+                    &::before,
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                    }
+
+                    &::before {
+                        background: whitesmoke;
+                        opacity: 1;
+                    }
+
+                    &::after {
+                        display: block;
+                        z-index: 1;
+                        background: rgba(0, 0, 0, 0.5);
+                        transition: opacity 0.3s ease-in-out;
+                        opacity: 0;
+                    }
+
+                    &--is-selected {
+                        &::after {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin hero-banner {
+    #{$select} {
+        &--hero-banner {
+            #{$select} {
+                // &__item {
+                //     align-self: stretch;
+                //     align-items: stretch;
+                // }
+
+                // &__nav {
+                //     width: 100%;
+                // }
+
+                // &__prev,
+                // &__next {
+                //     background: colors.get(light);
+                //     color: colors.get(highlight);
+                //     box-shadow: 0 0 0.15em rgba(0, 0, 0, 0.25);
+
+                //     &:hover,
+                //     &:focus {
+                //         background: colors.get(highlight);
+                //         color: colors.get(light);
+                //     }
+
+                //     > svg {
+                //         stroke-width: 0.5px;
+                //     }
+                // }
+
+                // @media all and (min-width: slide.$desktop) {
+                //     &__nav {
+                //         max-width: 80rem;
+                //     }
+                // }
+
+                // @media all and (max-width: slide.$desktop) {
+                //     &__nav {
+                //         font-size: 0.5em;
+                //     }
+
+                //     &__prev,
+                //     &__next {
+                //         flex: 1;
+                //     }
+                // }
+
+                &__into {
+                    margin: 0;
+                }
+
+                &__thumbnails {
+                    position: absolute;
+                    z-index: 2;
+                    bottom: -3em;
+                    right: 0;
+
+                    text-align: right;
+                }
+
+                &__thumbnail {
+                    border: 1px solid #bfb7c4;
+                    padding: 2em 0.5em 0.5em;
+                    font: fonts.em(18) / 1 fonts.get(secondary);
+
+                    transition: 0.3s ease-in-out;
+
+                    &:hover,
+                    &:focus,
+                    &--is-selected {
+                        background: white;
+                        text-decoration: none;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin home-products {
+}
+
+@mixin press {
+}
+
+@mixin hero {
+    #{$select} {
+        &--hero {
+            --carousel-nav-length: #{fonts.em(1920)};
+
+            @include fadein-on-interact();
+
+            #{$select} {
+                &__into {
+                    align-items: stretch;
+                }
+
+                @media all and (min-width: queries.get(section-max)) {
+                    &__nav {
+                        button {
+                            margin: 0 1em;
+                        }
+                    }
+                }
+            }
+
+            @media all and (min-width: queries.set(1000)) {
+                --carousel-offset: 10em;
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin promo-banner {
+    #{$select} {
+        &--promo-banner {
+            $gap: 1rem;
+
+            #{$select} {
+                &__in {
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+
+                &__into {
+                    justify-content: space-between;
+
+                    gap: #{$gap};
+                    margin: 0;
+                }
+
+                &__item {
+                    flex-basis: auto;
+                    align-self: center;
+
+                    padding: #{$gap} 0;
+
+                    display: inline-block;
+
+                    text-align: center;
+
+                    &:first-child {
+                        text-align: left;
+                    }
+
+                    &:last-child {
+                        text-align: right;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin instagram-content {
+    #{$select} {
+        &--instagram-content {
+            --carousel-button-color-background: transparent;
+            --carousel-button-color-active: white;
+            --carousel-button-color-inactive: white;
+
+            --carousel-nav-length: #{queries.get(section-max)};
+            --carousel-inset: 3em;
+
+            img {
+                width: 100%;
+            }
+
+            #{$select} {
+                &__item {
+                    $break-threshold: 265;
+
+                    max-width: 100%;
+
+                    @media all and (min-width: queries.set($break-threshold * 2)) {
+                        max-width: calc(100% / 2);
+                    }
+
+                    @media all and (min-width: queries.set($break-threshold * 3)) {
+                        max-width: calc(100% / 3);
+                    }
+
+                    @media all and (min-width: queries.set($break-threshold * 4)) {
+                        max-width: calc(100% / 4);
+                    }
+
+                    @media all and (min-width: queries.set($break-threshold * 5)) {
+                        max-width: calc(100% / 5);
+                    }
+
+                    @media all and (min-width: queries.set($break-threshold * 6)) {
+                        max-width: calc(100% / 6);
+                    }
+
+                    @media all and (min-width: queries.set($break-threshold * 7)) {
+                        max-width: calc(100% / 7);
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin tiktok-videos {
+}
+
+@mixin tagline-descriptors {
+    #{$select} {
+        &--tagline-descriptors {
+            @include fadein-on-interact();
+            @include transparent-chevrons();
+
+            position: relative;
+
+            #{$select} {
+                &__nav {
+                    justify-content: flex-end;
+                }
+
+                &__next {
+                    right: -1.5em;
+                }
+
+                &__item {
+                    justify-content: flex-end;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin transparent-chevrons {
+    #{$select} {
+        &__prev,
+        &__next {
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        @media all and (max-width: slide.$desktop) {
+            &__nav {
+                font-size: 1em;
+                position: absolute;
+            }
+
+            &__nav button {
+                flex-grow: 0;
+            }
+        }
+    }
+}
+
+@mixin fadein-on-interact {
+    #{$select}__nav button {
+        opacity: 0;
+    }
+
+    &:hover #{$select}__nav button,
+    &:focus-within #{$select}__nav button {
+        opacity: 1;
+    }
+}
+
+@mixin product-spotlight {
+    #{$select} {
+        &--product-spotlight {
+            @include fadein-on-interact();
+            @include transparent-chevrons();
+
+            #{$select} {
+                &__item > * {
+                    flex: 1;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin fade {
+    @include slide.fade($select: slide.$select) {
+    }
+
+    #{$select} {
+        &--fade {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin product-beauty-shot {
+    #{$select} {
+        &--hide-vimeo-iframe {
+            iframe {
+                display: none;
+            }
+        }
+
+        &--product-beauty-shot {
+            [data-tracker] {
+                display: none;
+            }
+
+            [data-vimeo-carousel-id] {
+                background: transparent;
+            }
+
+            #{$select} {
+                &__into {
+                    position: absolute;
+                }
+
+                &__item:first-child {
+                    opacity: 1;
+                    animation: none;
+                }
+
+                &__item--current {
+                    [data-tracker] {
+                        display: block;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin vimeo-carousel {
+    @include slide.vimeo-carousel;
+
+    #{$select} {
+        &--vimeo-carousel {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin category-products {
+    #{$select} {
+        &--category-products {
+            --carousel-length: #{queries.get(1040)};
+            --carousel-offset: 7em;
+
+            & > #{$select}__into > {
+                #{$select} {
+                    &__item {
+                        max-width: 100%;
+
+                        @media all and (min-width: queries.set(800)) {
+                            max-width: calc(100% / 2);
+                        }
+
+                        // changed to 4 for desktop view
+                        @media all and (min-width: queries.set(1200)) {
+                            max-width: calc(100% / 4);
+                        }
+
+                        justify-content: center;
+
+                        > * {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            // hid for desktop view
+            @media all and (min-width: queries.set(1200)) {
+                #{$select} {
+                    &__nav {
+                        display: none;
+                    }
+                }
+            }
+
+            @media all and (max-width: queries.set(1200)) {
+                --carousel-length: #{queries.em(700)};
+            }
+
+            @media all and (max-width: queries.set(800)) {
+                --carousel-length: #{queries.em(400)};
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin category-products-customer-cart {
+    #{$select} {
+        &--category-products-customer-cart {
+            --carousel-length: #{queries.em(290)};
+            --carousel-offset: 7em;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin review-card-carousel {
+    #{$select} {
+        &--review-card-carousel {
+            --carousel-length: #{queries.em(1200)};
+            --carousel-offset: 7em;
+            --carousel-view-item-quantity: 4;
+
+            #{$select} {
+                &__into {
+                    align-items: stretch;
+                    margin: 0;
+                }
+
+                &__item {
+                    max-width: calc(100% / var(--carousel-view-item-quantity));
+                }
+
+                &__next {
+                    margin-left: auto;
+                }
+            }
+
+            @media all and (max-width: queries.set(1400)) {
+                --carousel-length: 87vw;
+            }
+
+            @media all and (max-width: queries.set(1250)) {
+                --carousel-offset: 20em;
+            }
+
+            @media all and (max-width: queries.set(1150)) {
+                --carousel-length: 90vw;
+                --carousel-view-item-quantity: 3;
+            }
+
+            @media all and (max-width: queries.set(900)) {
+                --carousel-length: 90vw;
+                --carousel-view-item-quantity: 2;
+            }
+
+            @media all and (max-width: queries.set(700)) {
+                --carousel-length: 86vw;
+                --carousel-view-item-quantity: 1;
+            }
+
+            @media all and (max-width: queries.set(520)) {
+                --carousel-length: 82vw;
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin ugc-photo {
+    #{$select} {
+        &--ugc-photo {
+            --carousel-length: 100%;
+            --carousel-inset: 6em;
+            --carousel-view-item-quantity: 6;
+
+            --carousel-button-color-background: white;
+
+            width: 100%;
+
+            @media all and (max-width: queries.set(1400)) {
+                --carousel-view-item-quantity: 5;
+            }
+
+            @media all and (max-width: queries.set(900)) {
+                --carousel-view-item-quantity: 4;
+            }
+
+            @media all and (max-width: queries.set(800)) {
+                --carousel-view-item-quantity: 3;
+            }
+
+            @media all and (max-width: queries.set(700)) {
+                --carousel-view-item-quantity: 2;
+                --carousel-inset: 3em;
+            }
+
+            #{$select} {
+                &__item {
+                    max-width: calc(100% / var(--carousel-view-item-quantity));
+                }
+
+                &__item {
+                    @include contain.pseudo($fill: true);
+
+                    &::before {
+                        @include contain.ratio($ratio: math.div(480, 640));
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

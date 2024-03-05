@@ -1,0 +1,8 @@
+// interfaces
+@use "interfaces/page";
+@use "interfaces/product";
+
+@include page.landing-page;
+
+@include product.product-listing-page;
+@include product.product-category-page;

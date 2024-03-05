@@ -1,0 +1,230 @@
+@use "sass:math";
+
+@use "./../config/queries";
+
+// utils
+@use "./../utils/contain";
+@use "./../utils/flyout";
+
+// abstracts
+@use "./../abstracts/video-link";
+
+// components
+@use "Shared/css/template/shoppingcart/components/dropdown";
+@use "Shared/scss/templates/base/components/list";
+@use "./../components/customer-service";
+@use "./../components/bubble";
+@use "./../components/breadcrumb";
+@use "./../components/money-back-info";
+@use "./../components/customer-service-address";
+@use "./../components/info-box";
+@use "./../components/quote";
+@use "./../components/poster-image";
+@use "./../components/made-in-usa";
+@use "./../components/social-media-favicon-link";
+@use "./../components/vimeo-player-button";
+@use "./../components/product-spotlight";
+@use "./../components/logo-title-hero";
+@use "./../components/stars";
+@use "./../components/card";
+@use "./../components/banner";
+@use "./../components/review-card";
+
+// layouts
+@use "./../layouts/content";
+@use "./../layouts/slide";
+@use "./../layouts/hero";
+@use "./../layouts/breakout";
+@use "./../layouts/form-header-banner";
+@use "./../layouts/form-image-banner";
+@use "./../layouts/hero-banner";
+@use "./../layouts/image-gallery";
+@use "./../layouts/modal-dialog";
+@use "./../layouts/accordion";
+@use "./../layouts/vimeo-poster-player";
+@use "./../layouts/bazaar";
+@use "./../layouts/vimeo-gallery";
+@use "./../layouts/post-card";
+@use "./../layouts/instagram-display";
+@use "./../layouts/category-product";
+@use "./../layouts/customer-login-section";
+
+@mixin index {
+    // abstracts
+    @include video-link.base;
+
+    // utils
+    @include contain.base;
+    @include contain.tiktok-video;
+    @include flyout.accordion;
+
+    // components
+    @include bubble.base;
+    @include made-in-usa.base;
+    @include vimeo-player-button.base;
+
+    @include product-spotlight.base;
+    @include product-spotlight.pedestal;
+    @include product-spotlight.underarm;
+    @include product-spotlight.salon-nails;
+    @include product-spotlight.nurazor;
+    @include product-spotlight.brows;
+    @include product-spotlight.face;
+
+    @include review-card.base;
+
+    // layouts
+    @include slide.hero;
+    @include slide.review-card-carousel;
+
+    @include hero-banner.base;
+    @include hero-banner.container;
+    @include hero-banner.callout-product;
+    @include hero-banner.media-text-carousel; // renamed from video to media to accomodate for full size images as well
+    @include hero-banner.callout-product-spotlight;
+    @include hero-banner.callout-box;
+    @include hero-banner.beauty; // current promo
+    @include hero-banner.heads;
+    @include hero-banner.holiday;
+
+    @include content.hero;
+    @include content.text-block;
+    @include content.grid-4-to-2;
+    @include content.reviews-with-card-carousel;
+    @include category-product.mobile-adjust;
+
+    @include content.blockquote-bkg;
+
+    @include vimeo-poster-player.base;
+
+    @include accordion.tabs;
+
+    @include breakout.base;
+
+    // blog section at footer
+    @include contain.excerpt-thumb;
+    @include contain.post-card;
+    @include post-card.base;
+    @include content.post-cards;
+}
+
+@mixin landing-page {
+    // utils
+    @include contain.base;
+
+    // components
+    @include breadcrumb.base;
+    @include stars.base;
+    @include customer-service.base;
+    @include customer-service.descriptor-iframe;
+    @include customer-service.logo-title-address;
+    @include customer-service.contact-nav;
+    @include customer-service.online-info;
+
+    @include customer-service-address.base;
+
+    @include modal-dialog.contact-form;
+
+    @include money-back-info.base;
+    @include money-back-info.alternate;
+
+    @include info-box.base;
+
+    @include quote.base;
+
+    @include poster-image.base;
+
+    @include social-media-favicon-link.base;
+
+    @include logo-title-hero.base;
+    @include logo-title-hero.page-banner;
+
+    @include card.base;
+
+    // layouts
+    @include hero.base;
+
+    @include slide.small-nav;
+    @include slide.instagram-content;
+
+    @include slide.hero-banner;
+    @include slide.press;
+
+    @include form-image-banner.base;
+    @include form-header-banner.base;
+
+    @include instagram-display.base;
+
+    // subpages
+    @include content.large-video;
+
+    @include content.about;
+    @include content.videos;
+    @include content.product-registration;
+    @include content.find-in-store;
+    @include content.online-offers;
+    @include content.press;
+    @include content.intershop;
+    @include content.purpose; // for the about "our purpose" page
+    @include content.form;
+    @include content.modal;
+    @include content.customer-reviews;
+    @include content.reviews;
+    @include content.nutrition;
+    @include content.free-workouts;
+    @include content.ingredients;
+    @include content.story;
+
+    @include image-gallery.base; // "trees" subpage
+    @include accordion.base;
+    @include accordion.block-format;
+
+    @include bazaar.reviews-max-width;
+
+    @content;
+}
+
+@mixin customer-service {
+    // utils
+
+    // components
+
+    // layouts
+}
+
+@mixin videos {
+    // utils
+
+    // components
+    @include vimeo-player-button.base;
+
+    // layouts
+    @include vimeo-gallery.base;
+}
+
+@mixin qr {
+    // utils
+
+    // components
+
+    // layouts
+    @include content.qr-page;
+    @include customer-login-section.base;
+}
+
+@mixin sitemap {
+    // utils
+
+    // components
+
+    // layouts
+    @include content.sitemap;
+}
+
+@mixin exclusive-content {
+    // utils
+
+    // components
+
+    // layouts
+}

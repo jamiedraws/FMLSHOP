@@ -1,0 +1,125 @@
+// utils
+@use "Shared/scss/templates/base/utils/scope";
+@use "./../utils/out-of-stock";
+@use "./../utils/variant-product";
+@use "./../utils/contain";
+@use "./../utils/shopping-cart-controller";
+
+// components
+@use "./../components/banner";
+@use "./../components/button";
+@use "./../components/poster-image";
+@use "./../components/product-variant";
+@use "./../components/form";
+@use "./../components/product-price-info";
+@use "./../components/alternate-product-category";
+@use "./../components/paginate-list";
+@use "./../components/vimeo-player-button";
+@use "./../components/ingredient";
+
+// layouts
+@use "./../layouts/product";
+@use "./../layouts/product-grid";
+@use "./../layouts/category-product";
+@use "./../layouts/product-details";
+@use "./../layouts/customer-cart";
+@use "./../layouts/accordion";
+@use "./../layouts/slide";
+@use "./../layouts/bazaar";
+
+@mixin product-category-page {
+    // components
+    @include scope.for-template {
+        @include button.view-products;
+    }
+
+    @include poster-image.base;
+    @include paginate-list.base;
+
+    // layouts
+    @include category-product.base;
+    @include category-product.category;
+
+    @include product-grid.base;
+    @include product-grid.category;
+
+    @include alternate-product-category.base;
+}
+
+@mixin product-listing-page {
+    // utils
+    @include contain.bazaarvoice-inline-ratings;
+    @include scope.for-template {
+        @include out-of-stock.base;
+    }
+
+    @include variant-product.base;
+    @include shopping-cart-controller.state;
+
+    // components
+    @include product-price-info.base;
+    @include paginate-list.base;
+
+    @include scope.for-template {
+        @include button.view-products;
+        @include button.retailer;
+    }
+
+    @include poster-image.base;
+
+    @include product-variant.base;
+    @include product-variant.container;
+    @include product-variant.button;
+    @include ingredient.base;
+    @include banner.base;
+
+    @include form.field-label;
+    @include form.label-combobox;
+    @include form.icon-field-combobox;
+
+    // layouts
+    @include product.base;
+
+    @include category-product.base;
+    @include category-product.listing;
+
+    @include slide.category-products;
+    @include slide.category-products-customer-cart;
+    @include slide.product-beauty-shot;
+
+    @include product-grid.base;
+    @include product-grid.listing;
+    @include product-grid.top-selling;
+
+    // bazaar voice center text
+    //@include bazaar.center-header;
+
+    @include customer-cart.base;
+    @include customer-cart.has-items-in-cart();
+    @include customer-cart.has-an-empty-cart();
+}
+
+@mixin product-detail-page {
+    // utils
+    @include contain.bazaarvoice-inline-ratings;
+    // if we need bazaar voice display "be the first to review this product"
+    //@include contain.bazaarvoice-inline-ratings-with-first;
+
+    @include accordion.base;
+    @include accordion.tabs;
+
+    // components
+    @include vimeo-player-button.base {
+    }
+
+    // layouts
+    // @include product.base;
+    @include product.detail;
+    @include product.related;
+    @include product-grid.additional;
+    @include product-details.base;
+    @include form.label-combobox--left;
+    @include bazaar.write-a-review-remove-outline;
+
+    @include slide.product-images;
+}

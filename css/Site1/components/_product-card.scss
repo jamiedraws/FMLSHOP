@@ -1,0 +1,126 @@
+$select: ".product-card" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        text-align: left;
+
+        &__group {
+            @include group.contain;
+            justify-content: flex-start;
+            max-width: calc(#{queries.get(section-max)} + 2rem);
+            box-sizing: content-box;
+
+            margin: 0 auto;
+            padding: 1rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+
+            @media all and (max-width: queries.get(navbar)) {
+                flex-direction: column;
+                padding: 0.5rem;
+            }
+        }
+
+        &__card {
+            flex-grow: 1;
+            flex-basis: auto;
+
+            padding: 1em;
+            border-radius: 0.5em;
+
+            @include background.color-map($background-color: colors.get(base)) {
+            }
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a {
+            padding: 1rem;
+            font-size: fonts.rem(14);
+            scroll-snap-align: start;
+
+            @include group.contain($gutter: 0.5rem) {
+            }
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        picture {
+            max-width: 10em;
+        }
+
+        img {
+            width: 100%;
+            filter: drop-shadow(3px 4px 7px colors.primary(warm-rose-hue-6));
+        }
+
+        &__button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            background: linear-gradient(
+                to bottom,
+                colors.primary(cool-rose-hue-1),
+                colors.primary(cool-rose-contrast)
+            );
+            font-weight: bold;
+            > a {
+                flex: 0 1 auto;
+                margin: 0;
+                @media all and (max-width: queries.get(navbar)) {
+                    flex-basis: 100%;
+                }
+            }
+        }
+
+        &__message {
+            color: colors.primary(warm-rose-hue-6);
+            text-transform: uppercase;
+            display: block;
+        }
+
+        &__footer {
+            color: colors.primary-type(base);
+        }
+
+        @media all and (min-width: queries.get(navbar)) {
+            a {
+                flex-basis: 20em;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+
+            &__button-group {
+                > a {
+                    flex-basis: 20em;
+                }
+            }
+        }
+
+        @media all and (max-width: queries.get(navbar)) {
+            a {
+                justify-content: flex-start;
+            }
+
+            picture {
+                max-width: 5em;
+            }
+        }
+
+        @content;
+    }
+}

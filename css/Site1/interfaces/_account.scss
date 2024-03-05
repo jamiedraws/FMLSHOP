@@ -1,0 +1,50 @@
+// utils
+
+// components
+@use "./../components/form";
+@use "./../components/validation-summary-errors" as vse;
+@use "./../components/validate";
+@use "./../components/address";
+@use "./../components/order-table";
+@use "./../components/order-item";
+@use "./../components/address";
+
+// layouts
+@use "./../layouts/account";
+@use "./../layouts/checkout";
+
+@mixin base {
+    // utils
+
+    // components
+
+    // layouts
+    @include account.base;
+}
+
+@mixin checkout {
+    // utils
+
+    // components
+
+    // layouts
+    @include account.checkout;
+}
+
+@mixin login {
+}
+
+@mixin create-account {
+}
+
+@mixin edit-account {
+}
+
+@mixin order-history {
+    // utils
+
+    // components
+    @include address.base;
+
+    // layouts
+}

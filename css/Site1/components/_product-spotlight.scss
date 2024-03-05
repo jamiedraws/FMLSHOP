@@ -1,0 +1,164 @@
+$select: ".product-spotlight" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        position: relative;
+
+        &__group {
+            @include group.contain($gutter: 0.5rem) {
+            }
+
+            align-items: center;
+        }
+
+        &__spotlight {
+            flex-basis: queries.em(294);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        &__product {
+            flex-basis: queries.em(240);
+            text-align: center;
+
+            picture {
+                border-radius: 100%;
+                overflow: hidden;
+            }
+        }
+
+        &__product figure {
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            right: 3em;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            max-width: queries.em(240);
+
+            figcaption {
+                font-size: 1.4em;
+                font-weight: bold;
+                color: #ebd3fa;
+
+                margin-top: 0.5em;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin pedestal {
+    #{$select} {
+        &--pedestal {
+            overflow: hidden;
+            margin-bottom: -1.5rem;
+            min-height: 29em;
+
+            &::after {
+                content: "";
+                background: url(/images/Site1/product-spotlight/pedestal.png)
+                    no-repeat bottom left;
+                background-size: queries.em(294) queries.em(76);
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: 0;
+            }
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin underarm {
+    #{$select} {
+        &--underarm {
+            #{$select} {
+                &__spotlight img {
+                    max-width: queries.em(167);
+                    margin-bottom: 1.5em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin salon-nails {
+    #{$select} {
+        &--salon-nails {
+            #{$select} {
+                &__spotlight figure {
+                    max-width: queries.em(96);
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin nurazor {
+    #{$select} {
+        &--nurazor {
+            #{$select} {
+                &__spotlight img {
+                    max-width: queries.em(169);
+                    margin-top: 1em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin brows {
+    #{$select} {
+        &--brows {
+            #{$select} {
+                &__spotlight img {
+                    max-width: queries.em(157);
+                    margin-top: 1.5em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin face {
+    #{$select} {
+        &--face {
+            #{$select} {
+                &__spotlight img {
+                    max-width: queries.em(188);
+                    margin-top: 3.5em;
+                }
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,152 @@
+$select: ".post-card" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        &__picture {
+            flex: 0 0 auto;
+            display: block;
+            // border: 1px solid #e0c871;
+
+            margin-top: auto;
+        }
+
+        &__logo {
+            flex: 0 0 5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+
+            > img {
+                max-width: 10em;
+                max-height: 5em;
+            }
+        }
+
+        &__caption {
+            margin: 0.5rem 0;
+
+            @include space.between-flow-elements() {
+            }
+        }
+
+        &__title {
+            font-size: fonts.rem(18);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        &__desc {
+            font-size: fonts.rem(18);
+        }
+
+        &__footer {
+            font-size: fonts.rem(18);
+
+            margin: auto 0 2rem;
+        }
+
+        &__link {
+            text-transform: uppercase;
+            text-underline-offset: 0.25em;
+            font-weight: bold;
+            color: #ff9e86;
+        }
+
+        &__link:not(:hover):not(:focus) {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: cover;
+        }
+
+        @media all and (min-width: queries.get(document-mobile-portrait)) {
+            #{$select} {
+                &__title {
+                    flex: 0 0 queries.rem(43);
+                }
+
+                &__caption {
+                    flex: 0 0 queries.rem(46);
+                    margin-top: 0;
+                }
+            }
+        }
+
+        @media all and (max-width: queries.get(document-mobile-portrait)) {
+            #{$select} {
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin shefinds {
+    #{$select} {
+        &--shefinds {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin allure {
+    #{$select} {
+        &--allure {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin harpersbazaar {
+    #{$select} {
+        &--harpersbazaar {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin elle {
+    #{$select} {
+        &--elle {
+            #{$select} {
+                &__logo > img {
+                    max-width: 7em;
+                }
+            }
+
+            @content;
+        }
+    }
+}

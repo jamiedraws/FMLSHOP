@@ -1,0 +1,63 @@
+@use "sass:map";
+
+$select: ".message" !default;
+
+// components
+@use "Shared/scss/templates/base/components/validate" with (
+    $select: $select,
+    $separator: "",
+    $font-size: 1em,
+    $colors: (
+        valid: currentColor
+    )
+);
+
+@mixin base {
+    @include validate.base;
+
+    #{$select} {
+        --validate-invalid-font-color: #{map.get(validate.$colors, invalid)};
+
+        &__group {
+            order: 1;
+        }
+
+        &__label {
+            margin-bottom: 0.5rem;
+        }
+
+        @content;
+    }
+}
+
+@mixin search {
+    #{$select} {
+        &--search {
+            #{$select} {
+                &__invalid {
+                    margin-bottom: 1rem;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin promo-code {
+    #{$select} {
+        &--promo-code {
+            #{$select} {
+                &__invalid {
+                    margin-top: 0.5rem;
+                }
+
+                &__valid {
+                    width: 100%;
+                }
+            }
+
+            @content;
+        }
+    }
+}

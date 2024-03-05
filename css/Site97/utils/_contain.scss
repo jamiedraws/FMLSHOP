@@ -1,0 +1,22 @@
+@use "sass:math";
+
+$select: ".contain" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// utils
+@use "Shared/scss/templates/base/utils/contain";
+
+@mixin base {
+    @include contain.base;
+
+    #{$select} {
+        &--poster-image {
+            @include contain.ratio(math.div(997, 1080));
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,44 @@
+$select: ".product-details" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/chart";
+
+@mixin base {
+    #{$select} {
+        @include space.between-flow-elements(2rem) {
+        }
+
+        @include chart.structure;
+
+        @media all and (min-width: queries.set(600)) {
+            @include chart.inline-grid;
+        }
+
+        @media all and (max-width: queries.set(600)) {
+            @include chart.block-layout;
+        }
+
+        table,
+        ul:not(:first-child) {
+            margin-top: 1rem;
+        }
+
+        h4 + p {
+            margin-top: 0;
+        }
+
+        ul {
+            &[data-column-count="2"] {
+                column-width: 12em;
+            }
+        }
+
+        @content;
+    }
+}

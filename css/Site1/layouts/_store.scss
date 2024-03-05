@@ -1,0 +1,188 @@
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+@use "./../config/colors";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/css/template/base/abstracts/divider-line";
+
+$select: ".store" !default;
+$breakpoint: 70rem !default;
+$border-color: currentColor !default;
+
+@mixin base {
+    #{$select} {
+        width: 100%;
+
+        &__banner {
+            font-size: fonts.rem(25);
+            line-height: 1;
+            font-weight: normal;
+            text-align: center;
+            text-transform: uppercase;
+            background: colors.get(base);
+            color: white;
+            padding: 2rem;
+
+            @media all and (max-width: $breakpoint) {
+                font-size: 3rem;
+                font-size: clamp(3rem, 4vw, 5rem);
+            }
+        }
+
+        &__contain {
+            max-width: 110rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        &__space {
+            padding: 3rem 0;
+        }
+
+        &__group {
+            display: flex;
+            flex-wrap: wrap;
+
+            @include group.gutter(1rem);
+            margin-top: 0;
+            margin-bottom: 0;
+
+            @include group.flexchild(1 1 auto);
+        }
+
+        &__form {
+            flex: 15 1 30rem;
+            @media all and (max-width: $breakpoint) {
+                flex: 2 1 50rem;
+            }
+        }
+
+        &__address {
+            flex: 1 1 19rem;
+        }
+
+        &__divider {
+            font-size: 1.2rem;
+
+            @media all and (min-width: $breakpoint) {
+                @include divider-line.column;
+                padding: 0 2rem;
+            }
+
+            @media all and (max-width: $breakpoint) {
+                @include divider-line.row;
+            }
+        }
+
+        &__sidebar {
+            flex: 1 1 22rem;
+            text-align: center;
+        }
+
+        &__copy {
+            @include space.between-flow-elements(2rem) {
+            }
+        }
+
+        &__link {
+            display: inline-block;
+        }
+
+        &__nav > &__group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        &__title {
+            font-size: 2rem;
+        }
+
+        &__header {
+            font-size: 1.4rem;
+            font-family: inherit;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid $border-color;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+
+            &:not(:first-child) {
+                margin-top: 5rem;
+            }
+        }
+
+        address {
+            font-style: normal;
+        }
+
+        &__exclusive-callout {
+            font-size: fonts.rem(22);
+
+            > a:not(:hover):not(:focus) {
+                text-decoration: underline;
+            }
+        }
+
+        &__button {
+            > span:last-child {
+                padding-left: 1rem;
+            }
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            width: 100%;
+            background: $border-color;
+        }
+
+        &__login-direction {
+            @media all and (min-width: $breakpoint) {
+                &-mobile {
+                    display: none;
+                }
+            }
+
+            @media all and (max-width: $breakpoint) {
+                &-desktop {
+                    display: none;
+                }
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin checkout {
+    #{$select}--checkout {
+        #{$select} {
+            &__checkout {
+                flex: 1 1 32rem;
+
+                @media all and (max-width: $breakpoint) {
+                    flex: 1 1 100%;
+                }
+            }
+
+            &__shipping {
+                flex: 1 1 100%;
+            }
+        }
+    }
+}
+
+@mixin discovery-banner {
+    #{$select} {
+        &--discovery-banner {
+            text-align: center;
+
+            @content;
+        }
+    }
+}

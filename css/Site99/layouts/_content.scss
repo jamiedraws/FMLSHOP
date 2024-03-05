@@ -1,0 +1,199 @@
+$select: ".content" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/scss/templates/base/abstracts/list";
+
+@mixin base {
+    #{$select} {
+        overflow: hidden;
+        @include background.image-container;
+
+        &__bkg {
+            @include background.image-background;
+        }
+
+        &__group {
+            @include group.contain;
+            justify-content: center;
+        }
+
+        &__title {
+            font-size: fonts.em(40);
+            line-height: 1;
+        }
+
+        &__text {
+            @include space.between-flow-elements;
+        }
+
+        @content;
+    }
+}
+
+@mixin sub-page {
+    #{$select} {
+        &--sub-page {
+            text-align: left;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin picture-text {
+    #{$select} {
+        &--picture-text {
+            #{$select} {
+                &__block {
+                    margin-bottom: 0;
+                }
+
+                &__group {
+                    @include group.gutter(1rem);
+                }
+
+                &__picture {
+                    flex-basis: queries.em(473);
+                }
+
+                &__text {
+                    flex-basis: 20em;
+                    flex-grow: 1;
+                }
+
+                @media all and (max-width: queries.set(960)) {
+                    &__text {
+                        flex-basis: 100%;
+                        max-width: queries.em(473);
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin in-use {
+    #{$select} {
+        &--in-use {
+            #{$select} {
+                &__figure {
+                    font-size: fonts.em(24);
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin text-video {
+    #{$select} {
+        &--text-video {
+            background: colors.get(accent-pastel);
+
+            p {
+                font-size: fonts.em(18);
+            }
+
+            #{$select} {
+                &__group {
+                    justify-content: space-around;
+                    align-items: center;
+                    @include group.gutter(1rem);
+                }
+
+                &__text {
+                    flex-basis: 26em;
+                    text-align: left;
+                }
+
+                &__video {
+                    flex-basis: queries.em(480);
+                }
+
+                @media all and (max-width: queries.set(970)) {
+                    &__text {
+                        flex-basis: queries.em(480);
+                    }
+
+                    &__footer {
+                        flex-basis: 100%;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin communities {
+    #{$select} {
+        &--communities {
+            @include background.color-map(
+                colors.get(accent-dark),
+                colors.get(base-light)
+            );
+
+            #{$select} {
+                &__title {
+                    color: currentColor;
+                    font-size: fonts.em(27);
+                    line-height: 1.25;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin customer-reviews {
+    #{$select} {
+        &--customer-reviews {
+            #{$select} {
+                &__picture {
+                    max-width: queries.em(137);
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+                &__text {
+                    font-size: fonts.em(18);
+                }
+
+                &__title {
+                    [data-content-title-icon]::before {
+                        content: attr(data-content-title-icon);
+                    }
+                }
+
+                @media all and (max-width: queries.get(document-mobile-portrait)) {
+                    &__title {
+                        max-width: 7em;
+                        margin: auto;
+
+                        [data-content-title-icon]::before {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

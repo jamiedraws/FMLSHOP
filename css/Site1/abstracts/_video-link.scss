@@ -1,0 +1,66 @@
+$select: ".video-link" !default;
+
+@use "sass:math";
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+$playButtonHeight: 0.22em;
+$playButtonWidth: 0.35em;
+
+@mixin base {
+    #{$select} {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        color: colors.get(placeholder);
+        font-family: fonts.get(accent);
+        font-weight: 700;
+        line-height: 1;
+        font-size: 1.5em;
+        text-decoration: none;
+        transition: color 0.33s;
+        > * {
+            margin: 0 0.1em;
+        }
+
+        &__icon {
+            border-radius: 100%;
+            border: 0.1em solid colors.get(placeholder);
+            display: block;
+            width: 0.95em;
+            height: 0.95em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: border 0.33s, transform 0.4s;
+            &::after {
+                content: "";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: $playButtonHeight solid transparent;
+                border-bottom: $playButtonHeight solid transparent;
+                border-left: $playButtonWidth solid colors.get(placeholder);
+                margin-left: 0.075em;
+                margin-top: 0.015em;
+                transition: inherit;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            color: colors.get(pop);
+            #{$select}__icon {
+                transform: scale(1.1);
+                border-color: colors.get(pop);
+                &::after {
+                    border-left-color: colors.get(pop);
+                }
+            }
+        }
+
+        @content;
+    }
+}

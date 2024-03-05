@@ -1,0 +1,170 @@
+$select: ".catalog-product" !default;
+
+@use "../config/colors";
+@use "../config/fonts";
+@use "../config/queries";
+
+@mixin base {
+    #{$select} {
+        
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-around;
+        font-family: fonts.get(secondary);
+        font-weight: 400;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.25em 0 0;
+        border-bottom: 2px solid #cccccc;
+
+        &--no-extra {
+            padding-bottom: 1.25em;
+        }
+
+        &__title,
+        &__callout,
+        &__subtitle {
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        &__title {
+            font-size: 1.75em;
+        }
+
+        &__callout,
+        &__subtitle {
+            font-size: 1.4em;
+            text-transform: uppercase;
+        }
+
+        &__callout {
+            font-weight: bold;
+            color: colors.primary(warm-rose);
+            margin-top: 0.25em;
+        }
+
+        &__image {
+            flex: 0 1 189px;
+        }
+
+        &__copy {
+            margin: 0 1em;
+            flex: 1 1 25em;
+        }
+
+        ul {
+            margin: 0.5em 1em;
+        }
+
+        p {
+            margin: 1.5em 0;
+        }
+
+        &__view-btn {
+            margin: 4em 0 0 2.25em;
+            background: colors.primary-type(dark-gray-contrast);
+            color: white;
+            text-transform: uppercase;
+            font-size: 1em;
+            text-align: center;
+            font-weight: 600;
+            padding: 0.75em 2em;
+            transition: background 0.25s, color 0.25s;
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+            &:hover,
+            &:focus {
+                background: black;
+                color: colors.primary(warm-rose);
+            }
+        }
+        @media all and (min-width: 800px) {
+            button[aria-expanded=true] {
+                margin-top: 2.25em;
+            }
+        }
+
+        &__use {
+            margin: 0 1em 1em;
+            flex: 0 1 14em;
+            img {
+                border-radius: 100%;
+            }
+        }
+
+        @media all and (min-width: 800px) {
+            &__copy {
+                margin-top: 1em;
+            }
+        }
+
+        @media all and (max-width: 800px) {
+            &__view-btn {
+                margin: 2em auto 0;
+                font-size: 1em;
+            }
+        }
+
+        @media all and (max-width: 600px) {
+
+            flex-wrap: wrap;
+            justify-content: center;
+
+            $imageSize: 8em;
+
+            &__image {
+                flex: 0 1 auto;
+                min-width: $imageSize;
+            }
+
+            &__title {
+                font-size: 1.5em;
+            }
+
+            &__callout,
+            &__subtitle {
+                font-size: 1.15em;
+            }
+
+            &__copy {
+                flex: 1 1 auto;
+            }
+
+            &__image {
+                order: 1;
+                flex: 0 1 9em;
+            }
+            
+            &__use {
+                order: 2;
+                flex: 0 1 10em;
+                margin: auto 1em;
+                align-self: center;
+            }
+
+            &__copy {
+                order: 3;
+                flex: 0 1 100%;
+            }
+
+            &__view-btn {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+
+            &--no-extra {
+                min-height: 21em;
+            }
+
+        }
+
+        // smaller screen devices (iphone 5)
+        @media all and (max-width: 350px) {
+            font-size: 1.45rem;
+        }
+
+        @content;
+    }
+}

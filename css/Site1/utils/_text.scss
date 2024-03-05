@@ -1,0 +1,13 @@
+$select: ".text" !default;
+
+@mixin base {
+    #{$select} {
+        
+        &--underline {
+            text-decoration: underline;
+            border: none;
+        }
+
+        @content;
+    }
+}

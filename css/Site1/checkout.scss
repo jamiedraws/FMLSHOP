@@ -1,0 +1,20 @@
+// interfaces
+@use "interfaces/page";
+@use "interfaces/product";
+@use "interfaces/store";
+@use "interfaces/form";
+@use "Shared/scss/templates/base/interfaces/dtm";
+
+@include page.landing-page;
+
+@include product.product-listing-page;
+
+@include dtm.base;
+@include dtm.form;
+
+@include form.base;
+@include form.order-form;
+@include form.checkout;
+
+@include store.base;
+@include store.checkout;

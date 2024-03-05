@@ -1,0 +1,31 @@
+$select: ".stars" !default;
+
+
+
+@mixin base {
+    #{$select} {
+        
+        $color: 8aa45c;
+        $color2: 411f18;
+
+        --star: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23#{$color};' viewBox='0 0 40 40'%3E%3Cpath d='m7.65,40l4.65-15.2L0,16h15.2L20,0l4.8,16h15.2l-12.3,8.8,4.65,15.2-12.35-9.4-12.35,9.4Z'/%3E%3C/svg%3E");
+
+        --star2: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23#{$color2};' viewBox='0 0 40 40'%3E%3Cpath d='m7.65,40l4.65-15.2L0,16h15.2L20,0l4.8,16h15.2l-12.3,8.8,4.65,15.2-12.35-9.4-12.35,9.4Z'/%3E%3C/svg%3E");
+
+        &--5 {
+            background-image: var(--star);
+            background-repeat: repeat;
+            width: 8.33em;
+            height: 1.66em;
+        }
+
+        &--alt5 {
+            background-image: var(--star2);
+            background-repeat: repeat;
+            width: 8.33em;
+            height: 1.66em;
+        }
+    
+        @content;
+    }
+}

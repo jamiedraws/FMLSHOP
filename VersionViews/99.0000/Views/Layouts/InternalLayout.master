@@ -1,0 +1,145 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<OrderPageViewData>" %>
+<%@ Import Namespace="Dtm.Framework.ClientSites" %>
+
+<!DOCTYPE html>
+<html lang="en" class="dtm">
+	<head>
+		<title><%= Model.PageTitle %></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="<%= Model.PageMetaDescription %>">
+		<meta name="keywords" content="<%= Model.PageMetaKeywords %>">
+
+		<%
+			string androidThemeBarColor = SettingsManager.ContextSettings["AndroidThemeBarColor", "#ffffff"];
+
+			// represents the 1200x630 thumbnail image for Open Graph
+			string getFacebookImage = SettingsManager.ContextSettings["SocialPlugins.Facebook.OpenGraphImage"];
+
+			// represents the 1200x630 thumbnail image for Twitter
+			string getTwitterImage = SettingsManager.ContextSettings["SocialPlugins.Twitter.OpenGraphImage"];
+
+			string productName = SettingsManager.ContextSettings["Label.ProductName"];
+		%>
+
+		<meta name="theme-color" content="<%= androidThemeBarColor %>">
+
+		<%-- Open Graph Metadata --%>
+		<meta property="og:title" content="<%= Model.PageTitle %>">
+		<meta property="og:type" content="website">
+		<meta property="og:description" content="<%= Model.PageMetaDescription %>">
+		<meta property="og:url" content="<%= DtmContext.Domain.FullDomainOfferVersionUrl(DtmContext.PageCode) %>">
+		<meta property="og:image" content="<%= getFacebookImage %>">
+
+		<%-- Twitter Metadata --%>
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="<%= Model.PageTitle %>">
+		<meta name="twitter:description" content="<%= Model.PageMetaDescription %>">
+		<meta name="twitter:image" content="<%= getTwitterImage %>">
+		<meta name="twitter:domain" content="<%= DtmContext.Domain.FullDomainOfferVersionUrl(DtmContext.PageCode) %>">
+
+		<%
+			var mainSeoDomain = DtmContext.CampaignDomains
+				.Where(cd => cd.IsSEO).FirstOrDefault() 
+				?? DtmContext.CampaignDomains
+				.Where(cd => cd.IsIndexable).FirstOrDefault() 
+				?? DtmContext.Domain;
+
+			string canonicalUrl = DtmContext.PageCode.Equals("Index") 
+				? mainSeoDomain.FullDomainContext 
+				: mainSeoDomain.FullDomainCustomPathContext(DtmContext.Page.PageAlias) + DtmContext.ApplicationExtension;
+
+			canonicalUrl = canonicalUrl.Replace("http://", "https://");
+		%>
+
+		<% if (DtmContext.IsProxyIpAddress || DtmContext.CampaignDomains.Any(d => d.DomainId == DtmContext.DomainId && d.Domain.ToLower().Contains("dtmstage"))) { %>
+
+			<meta name="robots" content="noindex, nofollow">
+
+		<% } else { %>
+
+			<meta name="google-site-verification" content="<%= Model.PageMetaVerify %>">
+			<meta name="msvalidate.01" content="617F9E44E7841BBC8E57FE0772BB9DD9">
+			<link rel="canonical" href="<%= canonicalUrl %>">
+
+		<% } %>
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#30b2e6">
+		<meta name="msapplication-TileColor" content="#30b2e6">
+		<meta name="theme-color" content="#ffffff">
+
+		<% Html.RenderPartial("GetVersionStyles"); %>
+		<asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+	</head>
+
+	<body class="dtm__in">
+
+		<% Html.RenderPartial("Header", Model); %>
+
+		<asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+
+		<%
+			// renders the order form
+			bool enableOrderForm = SettingsManager.ContextSettings["Order.enableOrderForm", true];
+
+			// renders the back order message
+			bool enableBackOrderMessage = SettingsManager.ContextSettings["Order.enableBackOrderMessage", true];
+		%>
+		
+		<section aria-label="Order form" class="view order section">
+			<div class="view__anchor" id="order"></div>
+
+			<% if (!enableOrderForm && enableBackOrderMessage) { %>
+			<div class="order__header">
+				<h2 class="order__callout"><%= LabelsManager.Labels["OutOfStockMessage"] %></h2>
+			</div>
+			<% } %>
+
+			<% if (enableOrderForm) { %>
+			<div class="order__header">
+				<div class="order__title">This Offer Is Not Available In Stores</div>
+				<div class="order__callout">Fill out the form below to order your <b><%= productName %></b> Now!</div>
+			</div>			
+		
+			<div class="view__in section__in">
+				<div class="order__group">
+					<div class="order__form">
+						<%= Html.Partial("OrderForm") %>
+					</div>
+
+					<div class="order__offer-details offer-details">
+			            <%
+				            Html.RenderSnippet("OFFERDETAILS");
+			            %>
+					</div>
+
+					<div class="order__offer-details offer-details">
+						<strong>DISCLAIMER:</strong>
+						<p>These products have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, or prevent any disease.</p>
+					</div>
+				</div>
+			</div>
+			<% } %>
+
+			<span hidden>
+				<svg>
+					<symbol id="icon-chevron" x="0px" y="0px" viewBox="0 0 25.228 14.029">
+						<g transform="translate(1.414 1.414)">
+							<path d="M0,11.2,11.2,0m0,22.4L0,11.2" transform="translate(0 11.2) rotate(-90)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+						</g>
+					</symbol>
+				</svg>
+			</span>
+		</section>
+
+		<% Html.RenderPartial("Footer", Model); %>
+
+		<% Html.RenderPartial("GetVersionScripts", Model); %>
+
+	</body>
+
+</html>

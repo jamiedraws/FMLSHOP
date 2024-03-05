@@ -1,0 +1,291 @@
+$select: ".customer-cart" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        padding: 1rem;
+        text-align: center;
+
+        &__header,
+        &__footer {
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        &__header {
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        &__cart {
+            overflow: auto;
+
+            > * + * {
+                border-top: 1px solid #ccc;
+            }
+        }
+
+        &__footer {
+            font-weight: 500;
+            line-height: 1;
+
+            padding: 1rem;
+            margin-top: 1rem;
+
+            @include group.contain($gutter: 0.5rem) {
+                max-width: 20em;
+                width: 100%;
+            }
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &__title {
+            text-align: left;
+            font-size: fonts.em(25);
+
+            border-bottom: 1px solid;
+            padding-bottom: 1rem;
+        }
+
+        &__actions {
+            > * {
+                margin-inline: 0.25rem;
+            }
+
+            a {
+                font-weight: 500;
+                text-transform: uppercase;
+
+                &:link,
+                &:active {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        &__shipping-banner {
+            @include background.color-map(
+                $background-color: colors.get(first),
+                $text-color: colors.get(base)
+            ) {
+                text-transform: uppercase;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 0.25rem 0.75rem;
+
+                svg {
+                    --icon-size: 1.5625em;
+                    width: var(--icon-size, 1em);
+                    height: var(--icon-size, 1em);
+                }
+            }
+        }
+
+        &__banner {
+            font-size: 1.5em;
+        }
+
+        &__desc {
+            display: flex;
+            flex-direction: column;
+
+            font-weight: bold;
+            font-size: 1.65em;
+            line-height: 1;
+
+            margin-top: 0.5rem;
+
+            > b {
+                color: var(--primary-color);
+            }
+        }
+
+        &__product {
+            display: grid;
+            align-items: center;
+            gap: 1.5rem;
+            grid-template-areas: "picture name" "picture actions" "picture actions";
+            grid-template-columns: queries.em(120) minmax(1em, 20em);
+
+            padding: 1.5rem;
+            text-align: left;
+
+            &-name {
+                grid-area: name;
+
+                font-size: fonts.em(18);
+            }
+
+            &-picture {
+                grid-area: picture;
+
+                max-width: queries.em(120);
+            }
+
+            &-actions {
+                grid-area: actions;
+
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-end;
+                gap: 1rem;
+            }
+        }
+
+        &__order-total {
+            border-left: 1px solid;
+            padding-left: 0.5rem;
+            margin-inline-start: 0.5rem;
+        }
+
+        &__button {
+            flex-basis: auto;
+
+            text-decoration: underline;
+        }
+
+        &__combobox {
+            flex-basis: 7.5em;
+        }
+
+        &__price {
+            font-size: fonts.em(18);
+
+            margin-left: auto;
+
+            @media all and (max-width: queries.set(1000)) {
+                order: -1;
+                flex-basis: 100%;
+            }
+        }
+
+        @media all and (min-width: queries.set(1000)) {
+            &__cart {
+                max-height: 34em;
+            }
+        }
+
+        @media all and (max-width: queries.set(1000)) and (orientation: portrait) {
+            &__header {
+                position: sticky;
+                top: 0;
+
+                padding: 1rem;
+                margin: -1rem;
+            }
+
+            &__cart {
+                max-height: 75vmax;
+            }
+
+            &__footer {
+                position: sticky;
+                bottom: 0;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin when-cart-has-items {
+    [data-customer-cart-contains-items="true"] {
+        @content;
+    }
+}
+
+@mixin when-cart-is-empty {
+    [data-customer-cart-contains-items="false"] {
+        @content;
+    }
+}
+
+@mixin has-items-in-cart {
+    @include when-cart-is-empty() {
+        #{$select} {
+            &--has-items-in-cart {
+                display: none;
+
+                #{$select} {
+                }
+
+                @content;
+            }
+        }
+    }
+
+    @include when-cart-has-items() {
+        #{$select} {
+            &--has-items-in-cart {
+                #{$select} {
+                    &__combobox[data-customer-cart-readonly="true"],
+                    &__link[data-customer-cart-readonly="true"],
+                    &__quantity:not([data-customer-cart-readonly="true"]) {
+                        display: none;
+                    }
+
+                    &__quantity {
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin has-an-empty-cart {
+    @include when-cart-has-items() {
+        #{$select} {
+            &--has-an-empty-cart {
+                display: none;
+
+                #{$select} {
+                }
+
+                @content;
+            }
+        }
+    }
+
+    @include when-cart-is-empty() {
+        #{$select} {
+            &--has-an-empty-cart {
+                #{$select} {
+                    &__cart {
+                        @media all and (min-width: queries.get(document-mobile-portrait)) {
+                            max-width: 25em;
+                            width: 100vw;
+                        }
+                    }
+
+                    &__headline {
+                        margin: 1rem 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin free-products() {
+    #{$select} {
+        [data-customer-cart-product-code^="FREE"] {
+            #{$select} {
+            }
+        }
+    }
+}

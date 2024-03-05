@@ -1,0 +1,222 @@
+$select: ".flyout" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/colors";
+
+// utils
+@use "Shared/scss/templates/base/utils/flyout";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/close";
+@use "Shared/scss/templates/base/abstracts/background";
+@use "./../abstracts/plus-minus-icon";
+
+@mixin base {
+    @include flyout.base;
+
+    #{$select} {
+        position: static;
+
+        &__button {
+            color: currentColor;
+            font: inherit;
+
+            position: relative;
+        }
+
+        &__icon-toggle {
+            @include plus-minus-icon.icon {
+                font-size: 0.7em;
+                margin-inline-start: 0.5rem;
+            }
+
+            @include plus-minus-icon.plus;
+        }
+
+        &__icon-open {
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        &__icon-open,
+        &__icon-close {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        &__icon-close {
+            @include close.visible;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+
+            font-size: 0.55em;
+        }
+
+        &__button[aria-expanded="true"] {
+            font-weight: bold;
+        }
+
+        &__button[aria-expanded="true"] &__icon-toggle {
+            @include plus-minus-icon.minus;
+        }
+
+        &__button[aria-expanded="true"] &__icon-open {
+            opacity: 0;
+        }
+
+        &__button[aria-expanded="false"] &__icon-close {
+            @include close.hidden;
+        }
+
+        &__button[aria-expanded="false"] &__icon-open {
+            transition-delay: calc(#{close.$transition-delay}s * 2);
+        }
+
+        &__content {
+            background: white;
+        }
+
+        @media all and (max-width: queries.get(navbar)) {
+            &__container {
+                left: 0;
+                right: 0;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin full-width-container {
+    #{$select} {
+        &--full-width-container {
+            #{$select} {
+                &__container {
+                    left: 0;
+                    right: 0;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin products-view {
+    #{$select} {
+        &--products-view {
+            #{$select} {
+                &__button[aria-expanded="true"] {
+                    background: #f0f0f0;
+                }
+
+                &__content {
+                    background: #f0f0f0;
+                    box-shadow: 0 0.25rem 0.25rem hsla(0, 0%, 0%, 0.25);
+                }
+
+                @media all and (min-width: queries.get(navbar)) {
+                    &__content {
+                        margin-top: -1rem;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin is-hidden {
+    @include flyout.is-hidden;
+
+    #{$select} {
+        &--is-hidden {
+            #{$select} {
+                &__content {
+                    transform: translate(0);
+                }
+
+                &__pointer {
+                    opacity: 0;
+                    transform: scale(0);
+                    transition: none;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin is-disabled {
+    @include flyout.is-disabled;
+
+    #{$select} {
+        &--is-disabled {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin accordion {
+    #{$select} {
+        &--accordion {
+            #{$select} {
+                &__container {
+                    position: relative;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin for-customer-account {
+    #{$select} {
+        &--for-customer-account {
+            --flyout-color-primary: #{colors.primary-type(black)};
+            --flyout-color-primary-alternate: white;
+
+            #{$select} {
+                &__container {
+                    top: auto;
+                    left: auto;
+                    right: auto;
+                    transform: translateY(0.5em);
+                }
+
+                &__content:not(svg) {
+                    @include background.color-map(
+                        $background-color: var(--flyout-color-primary),
+                        $text-color: var(--flyout-color-primary-alternate)
+                    ) {
+                        box-shadow: 0 0 0.5em hsla(0deg, 0%, 0%, 0.5);
+                    }
+                }
+
+                &__pointer {
+                    position: absolute;
+                    transform: translateY(90%) scale(0.5);
+                    transition-delay: 0.3s;
+
+                    background: none;
+
+                    fill: var(--flyout-color-primary);
+                }
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+// components
+@use "Shared/css/template/base/components/accordion";
+@use "./../components/catalog-product";
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+@use "./../config/colors";
+
+@mixin base {
+
+    @include accordion.base {
+        & {
+            margin-top: 2rem;
+        }
+        [class*=view-less] {
+            display: none;
+        }
+        button[aria-expanded=true] {
+            [class*=view-less] {
+                display: block;
+            }
+            [class*=view-more] {
+                display: none;
+            }
+        }
+    };
+    @include catalog-product.base;
+    // @include list.new {
+    //     margin-bottom: 2em;
+    //     > *:not(:last-child) {
+    //         margin: 0.3em 0;
+    //     }
+    //     @include list.bullet {
+    //         color: colors.get(accent);
+    //     };
+    // };
+
+    @content;
+}

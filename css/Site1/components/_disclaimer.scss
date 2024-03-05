@@ -1,0 +1,17 @@
+$select: ".disclaimer" !default;
+
+
+
+@mixin base {
+    #{$select} {
+        
+        border: 1px solid black;
+        padding: 1em;
+        
+        > * + * {
+            margin-top: 1em;
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,31 @@
+$select: ".icon" !default;
+
+// abstracts
+@use "Shared/css/template/base/abstracts/icons";
+
+@mixin base {
+    @include icons.new;
+
+    #{$select} {
+        &--social {
+            min-width: 35px;
+            min-height: 35px;
+        }
+        &--tiktok:hover,
+        &--tiktok:focus {
+            * {
+                fill: black;
+            }
+        }
+        @content;
+    }
+
+    .tiktok {
+        &__blue {
+            fill: #25f4ee;
+        }
+        &__red {
+            fill: #fe2c55;
+        }
+    }
+}

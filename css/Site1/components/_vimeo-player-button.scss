@@ -1,0 +1,36 @@
+$select: ".vimeo-player-button" !default;
+
+// components
+@use "Shared/scss/templates/base/components/vimeo-player-button";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/position";
+
+@mixin base {
+    @include vimeo-player-button.base;
+
+    @keyframes vimeo-player-button-is-playing {
+        to {
+            opacity: 0;
+        }
+    }
+
+    #{$select} {
+        &__play {
+            pointer-events: none;
+            cursor: pointer;
+
+            &--is-playing {
+                animation: vimeo-player-button-is-playing 0.3s 2s ease-in-out
+                    forwards;
+            }
+        }
+
+        &:hover &__play,
+        &:focus &__play {
+            background: rgb(0, 173, 239);
+        }
+
+        @content;
+    }
+}

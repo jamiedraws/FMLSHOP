@@ -1,0 +1,123 @@
+$select: ".product-grid" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@function set-product-item-flex($multiplier: 1, $gap: 0.75rem) {
+    @return 0 1 calc((100% / #{$multiplier}) - (#{$gap} * 2));
+}
+
+@mixin base {
+    #{$select} {
+        text-align: center;
+
+        &__group {
+            $gap: 0.75rem;
+
+            // Jamie I'm commenting this out because this is undefined for me
+            @include group.contain(2.5rem 0.5rem);
+            align-items: flex-start;
+        }
+
+        &__title {
+            font-size: fonts.rem(25);
+            font-weight: 500;
+
+            @media screen and (max-width: 750px) {
+                //font-size: fonts.rem(35);
+                font-size: 5.5vw;
+            }
+
+            color: colors.get(primary);
+            text-transform: uppercase;
+        }
+
+        &__header {
+            margin: 4rem 0 5rem;
+
+            @include space.between-flow-elements(1em) {
+            }
+        }
+
+        &__group > &__header {
+            flex-basis: 100%;
+            text-transform: uppercase;
+        }
+
+        &__copy {
+            @include space.between-flow-elements() {
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin category {
+    #{$select} {
+        &--category {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin listing {
+    #{$select} {
+        &--listing {
+            #{$select} {
+                &__group {
+                    @include group.flexchild(set-product-item-flex(1));
+
+                    @media all and (min-width: queries.set(660)) {
+                        @include group.flexchild(set-product-item-flex(2));
+                    }
+
+                    @media all and (min-width: queries.set(980)) {
+                        @include group.flexchild(set-product-item-flex(3));
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin additional {
+    #{$select} {
+        &--additional {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin top-selling {
+    #{$select} {
+        &--top-selling {
+            #{$select} {
+                &__group {
+                    @include group.flexchild(set-product-item-flex(1));
+
+                    @media all and (min-width: queries.set(500)) {
+                        @include group.flexchild(set-product-item-flex(2));
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

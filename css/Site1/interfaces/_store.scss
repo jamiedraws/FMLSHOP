@@ -1,0 +1,80 @@
+//config
+@use "./../config/colors";
+
+// utils
+@use "Shared/scss/templates/base/utils/divider-line";
+
+// components
+@use "./../components/form";
+@use "./../components/validation-summary-errors" as vse;
+@use "./../components/validate";
+@use "./../components/address";
+@use "./../components/order-table";
+@use "./../components/order-item";
+@use "./../components/card";
+@use "./../components/disclaimer";
+@use "Shared/css/template/shoppingcart/components/burst" with (
+    $colors: (
+        background: colors.get(base),
+        text: colors.get(base-light),
+        border: colors.get(base)
+    )
+);
+
+// layouts
+@use "./../layouts/store";
+@use "./../layouts/checkout";
+
+@mixin base {
+    // utils
+
+    // components
+
+    // layouts
+    @include store.base;
+    @include store.discovery-banner;
+}
+
+@mixin checkout {
+    // utils
+
+    // components
+    @include disclaimer.base;
+
+    // layouts
+    @include store.checkout;
+}
+
+@mixin login {
+    // utils
+    @include divider-line.base;
+
+    // components
+    @include burst.new;
+
+    // layouts
+}
+
+@mixin create-account {
+    // utils
+
+    // components
+
+    // layouts
+}
+
+@mixin edit-account {
+}
+
+@mixin order-history {
+    // utils
+
+    // components
+    @include address.base;
+    @include order-table.base;
+    @include order-table.order-item;
+    @include order-item.base;
+    @include card.base;
+
+    // layouts
+}

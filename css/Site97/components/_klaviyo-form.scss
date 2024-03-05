@@ -1,0 +1,56 @@
+$select: ".klaviyo-form" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+@mixin base {
+    #{$select} {
+        @include fonts.base-em(16);
+
+        max-width: 20em;
+        margin: auto;
+
+        *,
+        *::before,
+        *::after,
+        input::placeholder {
+            font-size: inherit !important;
+        }
+
+        input[type="email"] {
+            height: queries.em(50) !important;
+            text-align: center !important;
+        }
+
+        button[type="button"] {
+            max-width: 15em;
+            margin: auto;
+            padding: queries.cascade-em(11) 0 !important;
+
+            background: var(--main-background-color) !important;
+            border-color: currentColor !important;
+            color: var(--main-text-color) !important;
+        }
+
+        form > * {
+            gap: var(--form-gap);
+            min-height: 0 !important;
+        }
+
+        [data-testid] {
+            padding: 0 !important;
+
+            &,
+            *:not(input):not([role="alert"]) {
+                color: inherit !important;
+            }
+        }
+
+        [role="alert"] {
+            padding: queries.cascade-em(8) !important;
+        }
+
+        @content;
+    }
+}

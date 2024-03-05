@@ -1,0 +1,46 @@
+$select: ".product-cards" !default;
+
+// config
+@use "./../config/queries";
+
+@mixin base {
+    #{$select} {
+        --product-card-size: #{queries.rem(666)};
+
+        &::before,
+        &::after {
+            content: "";
+            display: block;
+            background: var(--main-background-gradient);
+            padding: 0.1rem;
+        }
+
+        &::after {
+            margin-bottom: 0.25rem;
+        }
+
+        &__in {
+            max-width: calc(var(--product-card-size) * 2);
+
+            padding: 0.25rem 0;
+        }
+
+        &__group {
+            display: flex;
+            flex-wrap: wrap;
+
+            > * {
+                flex: 0 1 calc(100% / 2);
+            }
+        }
+
+        @media all and (max-width: queries.set(900)) {
+            &__group > * {
+                flex-basis: 100%;
+                justify-content: center;
+            }
+        }
+
+        @content;
+    }
+}

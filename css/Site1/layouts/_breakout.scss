@@ -1,0 +1,114 @@
+$select: ".breakout" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+$background: #8093dc;
+$color1: #d9dff5;
+$color2: #5367b2;
+$outline: rgba(255, 255, 255, 0.3);
+
+@mixin base {
+    #{$select} {
+        background: $background;
+        color: white;
+        margin: 2em auto;
+
+        font-size: fonts.rem(24);
+
+        &__link {
+            border-bottom: 2px solid white;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+                border-color: #5367b2;
+            }
+        }
+
+        &__image {
+            border: 2px solid $background;
+            background: $outline;
+            padding: 10px;
+            flex: 0 1 auto;
+        }
+
+        &__text {
+            flex: 0 1 25em;
+        }
+
+        &__title {
+            text-transform: uppercase;
+            font-size: 1.9em;
+            font-family: fonts.get(accent);
+            font-weight: bold;
+            line-height: 1;
+            margin: 0 0 0.66em;
+        }
+
+        &__border {
+            // horizontal rule
+            height: 2px;
+            background: $color1;
+            width: 100%;
+            border: none;
+            margin: 1.6em 0;
+        }
+
+        &__footer {
+            font-size: 1.6em;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-family: fonts.get(accent);
+            font-weight: normal;
+            > * {
+                display: block;
+            }
+        }
+
+        @media all and (min-width: 1200px) {
+            margin-left: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25em 1.75em;
+
+            &__image {
+                margin-left: -100px;
+            }
+
+            &__text {
+                margin-left: 1.6em;
+            }
+        }
+
+        @media all and (max-width: 1200px) {
+            padding: 1em;
+            &__image {
+                float: left;
+                margin: -2em 1em 1em -0.5em;
+                max-width: 33%;
+            }
+            &__footer {
+                text-align: right;
+            }
+        }
+
+        @media all and (max-width: 640px) {
+            text-align: center;
+            font-size: 3.5vw;
+            &__image {
+                float: none;
+                margin: -2em auto 1em;
+                display: block;
+                max-width: 70%;
+            }
+            &__footer {
+                text-align: center;
+            }
+        }
+
+        @content;
+    }
+}

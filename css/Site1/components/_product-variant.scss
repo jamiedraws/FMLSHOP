@@ -1,0 +1,130 @@
+$select: ".product-variant" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/form";
+
+@mixin base {
+    #{$select} {
+        color: colors.get(primary);
+
+        &__legend {
+            font: bold fonts.rem(25) / 1 fonts.get(accent);
+            color: colors.get(base);
+            margin-bottom: 1rem;
+        }
+
+        &__text {
+            padding: 0.5rem 1rem;
+            font-family: fonts.get(highlight);
+        }
+
+        &__group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @content;
+    }
+}
+
+@mixin container {
+    #{$select} {
+        &--container {
+            margin-top: 1rem;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin button {
+    #{$select} {
+        &--button {
+            position: relative;
+            display: flex;
+            padding: 0.75rem;
+
+            text-transform: uppercase;
+            cursor: pointer;
+
+            @include form.toggle-input {
+                & ~ #{$select}__radio {
+                    margin-right: 0.5rem;
+                }
+            }
+
+            @include form.toggle-input-checked {
+                & ~ #{$select}__radio,
+                & ~ #{$select}__label > #{$select}__radio {
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background: currentColor;
+                        border-radius: 100%;
+                        transform: scale(0.75);
+                    }
+                }
+
+                & ~ #{$select}__label {
+                    &::before {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            @include form.toggle-input-unchecked {
+            }
+
+            @include form.toggle-input-focus {
+            }
+
+            @include form.toggle-input-disabled {
+            }
+
+            #{$select} {
+                &__radio {
+                    @include form.toggle-container(
+                        $size: 2em,
+                        $border-radius: 1em
+                    );
+
+                    border-radius: 100%;
+                    border-color: currentColor;
+                    border-width: 0.1em;
+                    background-color: #eef0ed;
+                    font-size: 0.7rem;
+                }
+
+                &__label {
+                    flex: 1;
+                    display: flex;
+                    justify-content: space-between;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        opacity: 0;
+                        z-index: -1;
+
+                        background: #f0f0f0;
+                        border-radius: 0.5em;
+
+                        transition: opacity 0.3s ease-in-out;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

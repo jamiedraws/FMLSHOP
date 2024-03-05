@@ -1,0 +1,18 @@
+// interfaces
+@use "interfaces/page";
+@use "interfaces/store";
+@use "interfaces/form";
+@use "interfaces/product";
+
+@include page.landing-page;
+
+@include product.product-listing-page;
+
+@include form.base;
+@include form.order-form;
+@include form.checkout;
+@include form.create-account;
+
+@include store.base;
+@include store.login;
+@include store.order-history;

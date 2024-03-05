@@ -1,0 +1,26 @@
+// interfaces
+@use "interfaces/app";
+@use "interfaces/store";
+@use "Shared/scss/templates/base/interfaces/dtm";
+
+@include app.defer;
+
+@include dtm.base;
+@include dtm.make-backend-responsive;
+
+@include store.base;
+
+[data-append="#content_top"] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#content_top {
+    [data-append="#content_top"] {
+        opacity: 1;
+    }
+
+    .store {
+        order: 1;
+    }
+}

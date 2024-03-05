@@ -1,0 +1,8 @@
+// interfaces
+@use "interfaces/page";
+@use "interfaces/form";
+@use "interfaces/product";
+
+@include page.landing-page;
+@include page.videos;
+@include product.product-listing-page;

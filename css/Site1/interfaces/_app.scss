@@ -1,0 +1,178 @@
+$base: 1;
+$scroll-offset: 4em;
+
+// utils
+@use "Shared/scss/templates/base/utils/unit-conversion" with (
+    $base: $base
+);
+@use "Shared/scss/templates/base/utils/scope";
+@use "Shared/scss/templates/base/utils/delay-input";
+@use "./../utils/view" with (
+    $scroll-offset: $scroll-offset
+);
+@use "./../utils/section";
+@use "./../utils/hide";
+@use "./../utils/color";
+@use "./../utils/svg-icon";
+@use "./../utils/contain";
+@use "./../utils/float";
+@use "./../utils/text";
+@use "./../utils/element-controller";
+@use "./../utils/optanon-toggle-display";
+@use "./../utils/flyout";
+
+// components
+@use "Shared/scss/templates/base/components/link";
+@use "Shared/scss/templates/base/components/skip-link";
+@use "./../components/toast";
+@use "./../components/toggle-icons";
+@use "./../components/circular";
+@use "./../components/form";
+@use "./../components/button";
+@use "./../components/validate";
+@use "./../components/product-card";
+@use "./../components/promo-banner";
+@use "./../components/customer-account-menubar";
+@use "./../components/klaviyo";
+@use "./../components/status-screen";
+
+// layouts
+@use "./../layouts/document" with (
+    $base: $base,
+    $scroll-offset: $scroll-offset
+);
+@use "./../layouts/header";
+@use "./../layouts/nav";
+@use "./../layouts/footer";
+@use "./../layouts/content";
+@use "./../layouts/modal-dialog";
+@use "./../layouts/text-icon-button";
+@use "./../layouts/search-form";
+@use "./../layouts/slide";
+@use "./../layouts/social";
+@use "./../layouts/fieldset";
+
+@mixin critical {
+    // utils
+    @include view.base;
+    @include section.base;
+    @include section.breadcrumb;
+    @include hide.base;
+    @include color.base;
+    @include contain.base;
+    @include float.base;
+    @include text.base;
+    @include svg-icon.base;
+    @include element-controller.base;
+    @include optanon-toggle-display.base;
+    @include delay-input.base;
+
+    @include flyout.base;
+    @include flyout.full-width-container;
+    @include flyout.products-view;
+    @include flyout.is-hidden;
+    @include flyout.is-disabled;
+    @include flyout.for-customer-account;
+
+    // components
+    @include promo-banner.base;
+    @include link.base;
+    @include skip-link.base;
+    @include toast.base;
+    @include toast.polite;
+    @include customer-account-menubar.base;
+
+    @include scope.for-template {
+        @include circular.base;
+        @include circular.pill;
+
+        @include button.base;
+        @include button.transparent;
+
+        @include toggle-icons.base;
+        @include toggle-icons.checkbox(nav.$select);
+    }
+
+    @include form.base;
+    @include form.underline;
+    @include form.field-icon;
+    @include form.field-label;
+    @include form.field-button;
+    @include form.search;
+
+    @include validate.base;
+    @include validate.search;
+    @include validate.promo-code;
+
+    @include status-screen.initialize;
+    @include status-screen.klaviyo-waitlist;
+
+    // layouts
+    @include document.base;
+
+    @include scope.get-root {
+        @include document.root;
+    }
+
+    @include scope.for-template {
+        @include document.body;
+    }
+
+    @include header.base;
+
+    @include nav.base;
+    @include nav.is-start-page;
+    @include nav.is-minibar;
+
+    @include text-icon-button.base;
+    @include search-form.base;
+    @include product-card.base;
+
+    @include fieldset.base;
+    @include fieldset.klaviyo-waitlist;
+
+    @include content.base;
+    @include content.instagram;
+    @include content.sub-page;
+
+    @include modal-dialog.base;
+    @include modal-dialog.video;
+    @include modal-dialog.document;
+    @include modal-dialog.customer-cart;
+
+    @include slide.base;
+    @include slide.fade;
+    @include slide.promo-banner;
+    @include slide.ugc-photo;
+
+    @include social.base;
+
+    @include footer.base;
+    @include footer.container;
+    @include footer.logo-social;
+    @include footer.sitemap;
+    @include footer.form;
+    // @include footer.wave;
+
+    @include klaviyo.base;
+    @include klaviyo.embed-open;
+    @include klaviyo.submit;
+    @include klaviyo.sign-up-email;
+    @include klaviyo.sign-up-fname-email;
+
+    @content;
+}
+
+@mixin defer {
+    // center the confirmation banner
+    .dtm--confirmation img[src*="banner-bottom"] {
+        margin: 0 auto;
+    }
+
+    .dtm--confirmation p a,
+    .dtm--confirmation center a {
+        text-decoration: underline !important;
+    }
+
+    @content;
+}

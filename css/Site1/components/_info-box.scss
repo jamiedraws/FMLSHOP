@@ -1,0 +1,18 @@
+$select: ".info-box" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        display: inline-block;
+        @include background.color-map(colors.get(light), colors.get(attention));
+
+        @content;
+    }
+}

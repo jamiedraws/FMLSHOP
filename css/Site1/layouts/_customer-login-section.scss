@@ -1,0 +1,69 @@
+$select: ".customer-login-banner" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        @include background.color-map(
+            $background-color: #ededed,
+            $text-color: currentColor
+        ) {
+        }
+
+        &__title {
+            font-size: fonts.em(50);
+            line-height: 1;
+        }
+
+        &__group {
+            @include group.contain($gutter: 1rem) {
+            }
+            justify-content: space-evenly;
+        }
+
+        &__text {
+            flex-basis: 27em;
+
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        &__actions {
+            flex-basis: 20em;
+            align-self: center;
+
+            display: flex;
+            flex-direction: column;
+
+            > span {
+                align-self: center;
+                margin: 0.25rem;
+            }
+        }
+
+        @media all and (max-width: queries.set(850)) {
+            &__group {
+                max-width: 30em;
+                margin-left: auto;
+                margin-right: auto;
+
+                justify-content: flex-start;
+            }
+        }
+
+        @media all and (max-width: queries.set(500)) {
+            &__title {
+                font-size: 2.5em;
+            }
+        }
+
+        @content;
+    }
+}

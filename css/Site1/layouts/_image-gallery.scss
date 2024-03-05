@@ -1,0 +1,33 @@
+$select: ".image-gallery" !default;
+
+@mixin base {
+    #{$select} {
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+
+        > * {
+            flex: 0 1 32%;
+            max-width: 32%;
+            margin-bottom: 2%;
+        }
+
+        @media all and (max-width: 800px) {
+            > * {
+                flex: 0 1 49%;
+                max-width: 49%;
+            }
+        }
+
+        @media all and (max-width: 600px) {
+            > * {
+                flex: 0 1 100%;
+                max-width: 100%;
+            }
+        }
+    
+        @content;
+    }
+}

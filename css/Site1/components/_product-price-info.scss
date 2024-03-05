@@ -1,0 +1,19 @@
+$select: ".product-price-info" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+@mixin base {
+    #{$select} {
+        color: colors.get(callout);
+
+        &__callout {
+            display: block;
+            font-size: 1.5em;
+        }
+
+        @content;
+    }
+}

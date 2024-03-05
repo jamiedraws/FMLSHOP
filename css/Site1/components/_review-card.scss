@@ -1,0 +1,79 @@
+$select: ".review-card" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        flex: 1;
+        margin: 0.5rem;
+
+        box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
+
+        overflow: hidden;
+        position: relative;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+
+            color: white;
+            width: calc(100% - 2em);
+            height: 0.5em;
+            margin: auto;
+            background: currentColor;
+        }
+
+        &::before {
+            top: 0;
+            box-shadow: 0 0 0.5em currentColor, 0 0 0.75em currentColor,
+                0 0 1em currentColor, 0 0 1.5em currentColor,
+                0 1em 2em currentColor;
+        }
+
+        &::after {
+            bottom: 0;
+            box-shadow: 0 0 0.5em currentColor, 0 0 0.75em currentColor,
+                0 0 1em currentColor, 0 0 1.5em currentColor,
+                0 -1em 2em currentColor;
+        }
+
+        @include fonts.base-em(16);
+
+        &__group {
+            display: flex;
+            flex-direction: column;
+
+            overflow: auto;
+            max-height: 25em;
+            padding: 1.5rem;
+        }
+
+        &__caption {
+            flex-basis: 4.5em;
+            flex-shrink: 0;
+
+            @include space.between-flow-elements($gap: 0.25rem) {
+            }
+        }
+
+        &__name {
+            font-size: inherit;
+        }
+
+        &__rating {
+            margin: 2rem 0;
+        }
+
+        &__blockquote {
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,38 @@
+$select: ".search-form" !default;
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        text-align: left;
+
+        &__in {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        &__group {
+            @include group.contain($gutter: 0.5rem) {
+            }
+
+            align-items: center;
+        }
+
+        &__field {
+            flex-grow: 1;
+            flex-basis: 15rem;
+        }
+
+        button {
+            font-size: inherit;
+            color: inherit;
+        }
+
+        [role="alert"] {
+            flex-basis: 100%;
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,77 @@
+$select: ".text-button-icon" !default;
+
+// config
+@use "./../config/colors";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        font-size: 1rem;
+
+        &__group {
+            @include group.contain($gutter: 0.5rem) {
+            }
+
+            flex-wrap: nowrap;
+            align-items: center;
+            overflow: visible;
+        }
+
+        &__button {
+            display: flex;
+            align-items: center;
+            color: currentColor;
+        }
+
+        &__icon {
+            width: 2.5em;
+            height: 2.5em;
+            transform: scale(0.75);
+        }
+
+        &__status {
+            @include background.color-map(
+                $background-color: colors.get(first-dark),
+                $text-color: white
+            ) {
+                font-size: 1em;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                box-sizing: content-box;
+                padding: 0.25em;
+                min-width: 1em;
+                min-height: 1em;
+                aspect-ratio: 1/1;
+                border-radius: 10em;
+
+                transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+                transform: scale(1);
+
+                &:empty {
+                    transform: scale(0);
+                }
+            }
+        }
+
+        &__button > &__group {
+            position: relative;
+        }
+
+        &__button &__status {
+            margin-left: -0.75em;
+        }
+
+        &__image {
+            display: flex;
+            align-items: center;
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,36 @@
+$select: ".icon" !default;
+
+// config
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/utils/svg-icon" with (
+    $select: $select
+);
+
+@mixin base {
+    @include svg-icon.base;
+
+    #{$select} {
+        &--social {
+            fill: currentColor;
+        }
+
+        &--logo {
+            width: queries.em(90);
+            height: queries.em(85);
+
+            stroke: none;
+            fill: currentColor;
+        }
+
+        &--favicon-circle {
+            width: queries.em(125);
+            height: queries.em(125);
+
+            fill: currentColor;
+        }
+
+        @content;
+    }
+}

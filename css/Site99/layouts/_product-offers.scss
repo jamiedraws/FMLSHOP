@@ -1,0 +1,25 @@
+$select: ".product-offers" !default;
+
+// config
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/list";
+
+@mixin base {
+    #{$select} {
+        @include list.convert-to-grid($width: 20em, $gap: 2em) {
+            overflow: visible;
+        }
+
+        @media all and (max-width: queries.get(section-max)) {
+            column-width: 20vw;
+        }
+
+        @media all and (max-width: queries.set(900)) {
+            column-width: 35vw;
+        }
+
+        @content;
+    }
+}

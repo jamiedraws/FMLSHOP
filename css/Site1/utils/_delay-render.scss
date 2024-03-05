@@ -1,0 +1,11 @@
+$select: ".delay-render" !default;
+
+@mixin base {
+    #{$select} {
+        transition: none;
+        animation: none;
+        opacity: 0;
+
+        @content;
+    }
+}

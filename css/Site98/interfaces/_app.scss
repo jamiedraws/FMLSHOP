@@ -1,0 +1,47 @@
+$base: 1;
+$scroll-offset: 2em;
+
+// utils
+@use "Shared/scss/templates/base/utils/unit-conversion" with (
+    $base: $base
+);
+@use "Shared/scss/templates/base/utils/scope";
+@use "Shared/scss/templates/base/utils/sr";
+@use "./../utils/view" with (
+    $scroll-offset: $scroll-offset
+);
+@use "./../utils/section";
+
+// components
+
+// layouts
+@use "./../layouts/document" with (
+    $base: $base,
+    $scroll-offset: $scroll-offset
+);
+
+@mixin critical {
+    // utils
+    @include view.base;
+    @include section.base;
+    @include sr.base;
+
+    // components
+
+    // layouts
+    @include document.base;
+
+    @include scope.get-root {
+        @include document.root;
+    }
+
+    @include scope.for-template {
+        @include document.body;
+    }
+
+    @content;
+}
+
+@mixin defer {
+    @content;
+}

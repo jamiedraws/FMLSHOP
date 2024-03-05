@@ -1,0 +1,26 @@
+$select: ".payment-icons" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        @include group.contain;
+        justify-content: flex-start;
+
+        > img {
+            max-width: queries.rem(50);
+            width: 100%;
+
+            padding: 0.05em;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+        }
+
+        @content;
+    }
+}

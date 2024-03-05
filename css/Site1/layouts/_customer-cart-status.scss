@@ -1,0 +1,31 @@
+$select: ".customer-cart-status" !default;
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain;
+            justify-content: center;
+        }
+
+        &__response {
+            flex-basis: 100%;
+            text-align: center;
+        }
+
+        &__action {
+            flex-grow: 1;
+            flex-basis: 13em;
+
+            display: flex;
+        }
+
+        &__button {
+            flex: 1;
+        }
+
+        @content;
+    }
+}

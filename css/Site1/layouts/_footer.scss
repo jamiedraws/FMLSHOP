@@ -1,0 +1,238 @@
+$select: ".footer" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/css/template/base/abstracts/list";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+
+        @include background.color-map(
+            var(--contrast-background),
+            var(--main-text-color)
+        );
+        
+        &__title {
+            font-size: fonts.em(14);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        &__form-header {
+            font-size: 1.125em;
+            line-height: 1.2;
+        }
+
+        &__form-footer {
+            font-size: 0.875em;
+            line-height: 1.28;
+        }
+
+        &__group {
+            @include group.contain($gutter: 0) {
+                padding: 1rem;
+            }
+
+            align-items: center;
+        }
+
+        &__mbg {
+            margin: 1em auto;
+            max-width: 7em;
+        }
+
+        &__legal {
+            text-align: center;
+            margin: 2em auto;
+            font-size: fonts.em(14);
+            a:not(:hover):not(:focus) {
+                text-decoration: underline;
+            }
+            a + a {
+                &::before {
+                    content: "|";
+                    margin: 0 0.25em;
+                    text-decoration: none !important;
+                }
+            }
+            * + * {
+                margin-top: 1em;
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin container {
+    #{$select} {
+        &--container {
+            overflow: hidden;
+
+            &::before {
+                @include background.color-map(
+                    $background-color: colors.get(first),
+                    $text-color: colors.get(first-dark)
+                );
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                z-index: -2;
+            }
+
+            #{$select} {
+                &__in {
+                    margin-top: 3rem;
+                    margin-bottom: 3rem;
+                }
+            }
+
+            @content;
+        }
+        &--no-links {
+            &::before {
+                background: #faefed;
+            }
+        }
+    }
+}
+
+@mixin logo-social {
+    #{$select} {
+        &--logo-social {
+            flex-basis: 19em;
+            text-align: center;
+
+            #{$select} {
+                &__group {
+                    justify-content: center;
+                }
+
+
+
+                &__text {
+                    flex-basis: 100%;
+                    font-size: fonts.em(14);
+                    font-weight: 400;
+                    border-top: 1px solid;
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+
+                &__icon {
+                    font-size: 1.65em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin sitemap {
+    #{$select} {
+        &--sitemap {
+            flex-basis: 32em;
+
+            #{$select} {
+                &__group {
+                    margin: -1rem;
+
+                    @include group.flexchild($flex: 0 1 13em) {
+                    }
+
+                    align-items: flex-start;
+                }
+
+                &__list {
+                    @include list.structure($offset: 0, $gap: 1rem);
+                }
+            }
+
+            a {
+                font-size: fonts.em(14);
+            }
+
+            @media (min-width: queries.set(1200)) {
+                border: solid currentColor;
+                border-width: 0 1px;
+            }
+
+            @media (max-width: queries.set(1200)) {
+                #{$select} {
+                    &__group {
+                        justify-content: space-between;
+                    }
+                }
+            }
+
+            @content;
+        }
+        &--no-links &--sitemap {
+            display: none;
+        }
+    }
+}
+
+@mixin form {
+    #{$select} {
+        &--form {
+            flex-basis: 20em;
+
+            #{$select} {
+                &__fieldset {
+                    @include space.between-flow-elements($gap: 1rem) {
+                    }
+                }
+
+                &__text {
+                    font-size: fonts.em(12);
+                }
+            }
+
+            @media (min-width: queries.set(1200)) {
+                max-width: 20em;
+            }
+
+            @media (max-width: queries.set(1200)) {
+                flex-basis: 32em;
+            }
+
+            @content;
+        }
+        &--no-links &--form {
+            display: none;
+        }
+    }
+}
+
+@mixin wave {
+    #{$select} {
+        &--wave {
+            &::after {
+                content: "";
+                display: block;
+                background: url(/images/Site1/wave--footer.png);
+                width: 28em;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                z-index: -1;
+                background-repeat: no-repeat;
+                background-position: bottom left;
+            }
+
+            @content;
+        }
+    }
+}

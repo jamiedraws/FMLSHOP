@@ -1,0 +1,29 @@
+$select: ".circular" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// components
+@use "Shared/css/template/shoppingcart/components/circular";
+
+@mixin base {
+    @include circular.new {
+        color: colors.get(primary);
+        padding: 1em;
+
+        &:hover,
+        &:focus {
+            color: colors.get(dark);
+        }
+    }
+
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin pill {
+    @include circular.pill;
+}

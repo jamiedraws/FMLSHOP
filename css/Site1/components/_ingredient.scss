@@ -1,0 +1,96 @@
+$select: ".ingredient" !default;
+
+@use "./../config/queries";
+@use "./../config/fonts";
+@use "./../config/colors";
+
+@mixin base {
+    #{$select} {
+
+        text-align: center;
+        
+        &__in {
+            padding: 0;
+        }
+
+        &__group {
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 0;
+            > * {
+                margin: 0;
+            }
+        }
+
+        &__title {
+            font-size: 1.75em;
+            font-weight: bold;
+            margin-bottom: 0.5em;
+            line-height: 1;
+            text-transform: uppercase;
+            > span {
+                display: block;
+            }
+        }
+
+        ul {
+            text-transform: uppercase;
+        }
+
+        p {
+            max-width: 18em;
+        }
+
+        &__copy {
+            flex-grow: 1;
+            padding: 1em 2em;
+            ul, ol {
+                list-style: none;
+            }
+            li {
+                line-height: 1;
+                margin-bottom: 0.8em;
+            }
+        }
+
+        img {
+            z-index: 1;
+        }
+
+        &__image {
+            position: relative;
+        }
+
+        &__badge {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 0;
+            z-index: 2;
+            max-width: 8.5em;
+        }
+
+        &__col-2 {
+            column-count: 2;
+        }
+
+        &__col-3 {
+            column-count: 3;
+        }
+
+        @media all and (max-width: queries.get(document-mobile-portrait)) {
+            &__image {
+                flex-basis: 100%;
+                max-height: 18em;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    margin-top: -11em;
+                }
+            }
+        }
+    
+        @content;
+    }
+}

@@ -1,0 +1,27 @@
+// utils
+@use "./../utils/contain";
+
+// components
+@use "./../components/klaviyo-form";
+
+// layouts
+@use "./../layouts/hero";
+
+@mixin base {
+    // components
+
+    @content;
+}
+
+@mixin index {
+    // utils
+    @include contain.base;
+
+    // components
+    @include klaviyo-form.base;
+
+    // layouts
+    @include hero.base;
+
+    @content;
+}

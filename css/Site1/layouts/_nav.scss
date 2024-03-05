@@ -1,0 +1,286 @@
+@use "sass:map";
+
+$select: ".nav" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+// layouts
+@use "Shared/scss/templates/base/layouts/nav" with (
+    $colors: (
+        background: colors.primary-type(white),
+        text: currentColor
+    ),
+    $mq: (
+        container-min: queries.get(navbar),
+        container-max: queries.get(navbar)
+    )
+);
+
+@mixin base {
+    @include nav.base {
+        z-index: 11;
+        box-shadow: none;
+        border-bottom: 1px solid colors.get(first);
+
+        @include background.color-map(
+            colors.get(base-light),
+            colors.get(accent)
+        );
+
+        font-size: 1.1em;
+
+        &--is-end-page {
+            position: relative;
+        }
+
+        &__logo {
+            max-width: queries.em(90);
+            display: inline-block;
+            padding: 0;
+
+            img {
+                width: queries.em(90);
+            }
+        }
+
+        &__tagline {
+            font: italic fonts.em(18) / 1 fonts.get(primary);
+        }
+
+        &__list {
+            z-index: 1;
+            position: relative;
+        }
+
+        & &__link:hover,
+        & &__link:focus,
+        &__link > button:hover,
+        &__link > button:focus {
+            outline: none;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        &--simple &__group {
+            * {
+                display: none;
+            }
+        }
+
+        &--simple &__logo-tagline {
+            display: block;
+            margin: 0.25em auto;
+            * {
+                display: block;
+            }
+        }
+
+        &__label:not(&__label--is-selected) {
+            span,
+            &::after {
+                -webkit-transform: scaleX(1);
+                transform: scaleX(1);
+            }
+        }
+    }
+
+    @include nav.bar {
+        & &__logo {
+            font-size: 1rem;
+        }
+
+        &__group {
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        &__pane > &__group {
+            flex-wrap: nowrap;
+        }
+
+        &__pane {
+            flex-basis: 100%;
+            order: 1;
+
+            &::before,
+            &::after {
+                pointer-events: none;
+                opacity: 0;
+            }
+        }
+
+        &__list {
+            justify-content: center;
+
+            @include group.contain($gutter: 1rem) {
+            }
+
+            > * {
+                margin: 0;
+            }
+
+            margin-top: 0;
+            margin-bottom: 0;
+
+            > *:first-child,
+            > *:last-child {
+                margin-right: auto;
+            }
+        }
+
+        &__list > &__logo-tagline {
+            display: none;
+        }
+
+        &__link {
+            padding: 1rem;
+        }
+
+        &__actions {
+            flex: 0 0 auto;
+        }
+
+        &__pane,
+        &__list,
+        &__link {
+            position: static;
+
+            background: transparent;
+        }
+    }
+
+    @include nav.drawer {
+        &__logo {
+            max-width: queries.em(45);
+        }
+
+        &__label {
+            margin-left: 1rem;
+        }
+
+        &__actions {
+            margin-left: auto;
+            padding-left: 0.5em;
+        }
+
+        &__underlay {
+            z-index: 2;
+        }
+
+        &__list {
+            text-align: left;
+
+            > * {
+                flex-basis: 100%;
+                justify-content: flex-start;
+
+                position: relative;
+            }
+        }
+
+        &__pane &__logo {
+            margin: 0.5rem;
+        }
+
+        &__list > &__logo-tagline,
+        &__link {
+            padding: 1.5rem;
+        }
+
+        @media all and (max-width: queries.set(760)) {
+            &__group > &__logo-tagline::before,
+            &__group > &__logo-tagline > &__tagline {
+                display: none;
+            }
+
+            &__list > &__logo-tagline {
+                flex-direction: column;
+            }
+        }
+    }
+
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin wave {
+    #{$select} {
+        &__in {
+            padding: 0 1em;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            background: url(/images/Site1/wave.png) top right no-repeat;
+            min-width: 18em;
+            min-height: 100%;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        @content;
+    }
+}
+
+@mixin is-start-page {
+    #{$select} {
+        &--is-start-page {
+            @media all and (min-width: queries.get(navbar)) {
+                #{$select} {
+                    &__logo-tagline {
+                        padding: 1rem 0;
+                        margin-left: auto;
+                        margin-right: 30%;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin is-minibar {
+    #{$select} {
+        &--is-minibar {
+            @media all and (min-width: map.get(nav.$mq, container-min)) {
+                #{$select} {
+                    &__group {
+                        justify-content: space-between;
+                    }
+
+                    &__logo-tagline {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    &__logo {
+                        max-width: 3em;
+                    }
+
+                    &__pane {
+                        flex-grow: 0;
+                        flex-basis: auto;
+                    }
+
+                    &__actions {
+                        order: 1;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

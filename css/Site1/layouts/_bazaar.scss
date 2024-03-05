@@ -1,0 +1,52 @@
+
+@use "./../config/queries";
+
+@mixin center-text {
+    
+    .bv-content-container .bv-content-core {
+        text-align: center !important;
+    }
+    
+    .bv-cv2-cleanslate [class*=bv-core-container] .bv-content-core .bv-content-details-offset-off {
+        width: 100% !important;
+    }
+    
+    
+    .bv-cv2-cleanslate [class*=bv-core-container] .bv-content-media-container {
+        text-align: left !important;
+    }
+    
+    
+    .bv-cv2-cleanslate [class*=bv-core-container] .bv-content-core .bv-content-header-meta {
+        margin: 0 auto 1em !important;
+    }
+    
+}
+
+@mixin center-header {
+    
+    .bv-cv2-cleanslate .bv-core-container-63 .bv-compat .bv-content-search .bv-masthead .bv-masthead-product {
+        text-align: center !important;
+    }
+    
+    .bv-cv2-cleanslate .bv-core-container-63 .bv-compat .bv-content-search .bv-masthead .bv-masthead-product .bv-secondary-summary {
+        width: 100% !important;
+    }
+    
+}
+
+
+@mixin write-a-review-remove-outline {
+    // remove the balack outline when focusing on the stars on PDP pages
+    #ratings-summary:focus {
+        outline: none;
+    }
+}
+
+@mixin reviews-max-width {
+    // set a max width on bazaarvoice reviews
+    #bazaarDiv {
+        margin: 0 auto;
+        max-width: queries.get(section-max);
+    }
+}

@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<ClientSiteViewData>" %>
+<%@ Import Namespace="Dtm.Framework.ClientSites" %>
+
+<!DOCTYPE html>
+<html lang="en" class="dtm">
+  
+	<head>
+
+		<title><%= DtmContext.Page.PageTitle %></title>
+
+		<%= Html.Partial("MetaFavicon") %>
+
+		<%= Html.Partial("GetVersionStyles") %>
+        		
+		<asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+	</head>
+
+	<body class="dtm__in">
+		
+		<%= Html.Partial("Header", Model) %>
+
+		<asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+
+		<%= Html.Partial("Instafeed", Model) %>		
+		
+		<%= Html.Partial("Footer", Model) %>
+
+		<%= Html.Partial("GetVersionScripts", Model) %>
+
+	</body>
+
+</html>

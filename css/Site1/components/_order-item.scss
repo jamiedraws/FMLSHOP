@@ -1,0 +1,37 @@
+$select: ".order-item" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        flex: 1;
+        margin-right: 1em;
+
+        font: 400 fonts.em(20) fonts.get(primary);
+
+        &__group {
+            @include group.contain;
+            justify-content: space-between;
+        }
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &__id {
+            font-weight: normal;
+            font-size: 80%;
+            color: #666666;
+        }
+
+        @content;
+    }
+}

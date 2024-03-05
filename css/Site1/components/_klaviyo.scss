@@ -1,0 +1,131 @@
+$select: ".klaviyo-form" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/fonts";
+
+@mixin base {
+    #{$select} {
+        margin: 0.6em 0;
+
+        @content;
+    }
+}
+
+@mixin embed-open {
+    #{$select} {
+        &--embed-open {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin submit {
+    #{$select} {
+        &--submit {
+            [data-testid="form-component"] {
+                padding: 0 !important;
+            }
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin sign-up-email {
+    #{$select} {
+        &[class*="WER6ky"] {
+            form > [class*="kl-private-reset-css"] {
+                display: flex !important;
+                flex-direction: row !important;
+                min-height: unset !important;
+                justify-content: flex-start !important;
+                border: 1px solid var(--primary-dark-color);
+                background: white !important;
+            }
+
+            [data-testid="form-component"] {
+                padding: 0.1em 0.2em 0.1em 0 !important;
+                align-self: center;
+            }
+
+            button.needsclick {
+                padding: 1em 1em !important;
+            }
+
+            [data-testid="form-row"].needsclick {
+                flex-grow: 1;
+            }
+
+            .needsclick.kl-private-reset-css-Xuajs1 {
+                border: none !important;
+                flex-wrap: wrap !important;
+            }
+
+            button.needsclick.kl-private-reset-css-Xuajs1 {
+                background: var(--color-first) !important;
+                color: white !important;
+                transition: background 0.25s ease-in-out;
+            }
+
+            button.needsclick.kl-private-reset-css-Xuajs1:hover {
+                background: var(--color-first-light) !important;
+                color: white !important;
+            }
+        }
+    }
+}
+
+@mixin sign-up-fname-email {
+    #{$select} {
+        &[class*="U7cfdS"] {
+            max-width: 35em;
+            margin-inline: auto;
+
+            [data-testid="form-row"] {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            [data-testid="form-component"] {
+                @supports (gap: 0.5rem) {
+                    padding-inline: 0 !important;
+                }
+
+                &:not(:last-child) {
+                    flex-basis: 15em !important;
+
+                    @media all and (max-width: queries.set(750)) {
+                        flex-basis: 100% !important;
+                    }
+                }
+            }
+
+            &[class*="--embed-open"] {
+                [data-testid="form-row"]:first-child
+                    [data-testid="form-component"] {
+                    max-width: 25em;
+                    margin-inline: auto;
+
+                    span {
+                        font-size: queries.rem(20) !important;
+                    }
+                }
+            }
+
+            &[class*="--submit"] {
+                [data-testid="form-component"] {
+                    &:first-child {
+                        margin-bottom: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}

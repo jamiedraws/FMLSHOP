@@ -1,0 +1,26 @@
+$select: ".vimeo-poster-player" !default;
+
+// layouts
+@use "Shared/scss/templates/base/layouts/vimeo-poster-player";
+
+@mixin base {
+    @include vimeo-poster-player.base;
+
+    #{$select} {
+        img {
+            pointer-events: none;
+        }
+
+        &:focus-within {
+            iframe {
+                opacity: 1;
+            }
+
+            img {
+                opacity: 0;
+            }
+        }
+
+        @content;
+    }
+}

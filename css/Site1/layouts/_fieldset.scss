@@ -1,0 +1,145 @@
+$select: ".fieldset" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            $size: 0.5rem;
+            @include group.contain($size);
+            @include group.flexchild(1 1 15em);
+        }
+
+        &__group > &__group {
+            margin: 0;
+        }
+
+        &__take-all {
+            flex-basis: 100%;
+        }
+
+        &__take-some {
+            flex-basis: 15em;
+        }
+
+        @content;
+    }
+}
+
+@mixin create-account {
+    #{$select} {
+        &--create-account {
+            #{$select} {
+                &__take-some {
+                    flex-basis: 20em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin login {
+    #{$select} {
+        &--login {
+            #{$select} {
+                &__take-some {
+                    padding-top: 2rem;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin klaviyo-waitlist {
+    #{$select} {
+        &--klaviyo-waitlist {
+            position: relative;
+            // z-index: 11;
+            text-align: center;
+
+            img {
+                margin: auto;
+            }
+
+            img[src$="logo.svg"] {
+                max-width: 10em;
+            }
+
+            img + figcaption {
+                margin-top: 1rem;
+            }
+
+            #{$select} {
+                &__in {
+                    max-width: 60rem;
+                }
+
+                &__group {
+                    justify-content: center;
+                }
+
+                &__picture-sidebar {
+                    flex-basis: 10em;
+                }
+
+                &__picture-sidebar > img {
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                &__text {
+                    align-self: center;
+                    margin: 1rem;
+                }
+
+                &__title {
+                    font: fonts.em(40) fonts.get(primary);
+                    text-transform: uppercase;
+                    color: colors.get(primary);
+                }
+
+                &__action-disclaimer {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    > p {
+                        order: 1;
+                        margin-top: 1rem;
+                    }
+                }
+            }
+
+            $bp: queries.set(1000);
+
+            @media all and (min-width: $bp) {
+                #{$select} {
+                    &__picture-block {
+                        display: none;
+                    }
+                }
+            }
+
+            @media all and (max-width: $bp) {
+                #{$select} {
+                    &__picture-sidebar {
+                        display: none;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,45 @@
+$select: ".social-media-favicon-link" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/position";
+
+@mixin base {
+    #{$select} {
+        text-align: center;
+        border-radius: 100%;
+        background: var(--primary-dark-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5em;
+        height: 2.5em;
+        color: white;
+
+        &__favicon {
+            position: relative;
+            font-size: 0.6em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            top: 0.2em;
+
+            > svg:last-child {
+                @include position.center-absolute($position: absolute);
+                font-size: 2em;
+                transform: translateY(-10%);
+            }
+        }
+
+        &__link {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,176 @@
+$select: ".product-card" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/background";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        display: flex;
+        // flex-wrap: wrap;
+        gap: 2rem;
+        padding: 2rem;
+
+        text-transform: uppercase;
+
+        @include fonts.base-em(18);
+
+        font-weight: 500;
+        line-height: 1;
+
+        @include background.color-map(
+            $background-color: var(--main-background-color),
+            $text-color: var(--main-text-color)
+        );
+
+        &__text {
+            flex: 0 1 18em;
+
+            display: flex;
+            flex-direction: column;
+
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        &__title {
+            font-weight: 900;
+            font-size: fonts.cascade-em(30);
+        }
+
+        &__desc {
+        }
+
+        &__price {
+            margin-top: 3rem;
+            text-transform: capitalize;
+        }
+
+        &__action {
+        }
+
+        &__picture {
+            font-size: 1rem;
+            flex: 0 1 queries.em(240);
+
+            text-align: center;
+
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        @content;
+    }
+
+    @include pomegranate();
+    @include matcha();
+    @include vanilla();
+    @include chocolate();
+    @include cacao();
+    @include berry-mint();
+    @include electric-berry();
+    @include smart-coffee();
+    @include unflavored();
+}
+
+@mixin pomegranate {
+    #{$select} {
+        &--pomegranate {
+            --main-background-color: #c470a8;
+            --main-text-color: #661d39;
+
+            @content;
+        }
+    }
+}
+
+@mixin matcha {
+    #{$select} {
+        &--matcha {
+            --main-background-color: #9cb16f;
+            --main-text-color: #333e34;
+
+            @content;
+        }
+    }
+}
+
+@mixin vanilla {
+    #{$select} {
+        &--vanilla {
+            --main-text-color: #a58576;
+
+            @content;
+        }
+    }
+}
+
+@mixin chocolate {
+    #{$select} {
+        &--chocolate {
+            --main-background-color: #7b5a52;
+            --main-text-color: #daa078;
+
+            @content;
+        }
+    }
+}
+
+@mixin cacao {
+    #{$select} {
+        &--cacao {
+            --main-background-color: #c6c3bb;
+            --main-text-color: #522b1f;
+
+            @content;
+        }
+    }
+}
+
+@mixin berry-mint {
+    #{$select} {
+        &--berry-mint {
+            --main-background-color: #574578;
+            --main-text-color: #b4a3c9;
+
+            @content;
+        }
+    }
+}
+
+@mixin electric-berry {
+    #{$select} {
+        &--electric-berry {
+            --main-background-color: #1b618c;
+            --main-text-color: white;
+
+            @content;
+        }
+    }
+}
+
+@mixin smart-coffee {
+    #{$select} {
+        &--smart-coffee {
+            --main-background-color: #93d1f2;
+            --main-text-color: #36629a;
+
+            @content;
+        }
+    }
+}
+
+@mixin unflavored {
+    #{$select} {
+        &--unflavored {
+            --main-background-color: #360016;
+            --main-text-color: #f0ba97;
+
+            @content;
+        }
+    }
+}

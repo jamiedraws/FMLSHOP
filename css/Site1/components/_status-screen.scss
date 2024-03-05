@@ -1,0 +1,74 @@
+$select: ".status-screen" !default;
+
+// components
+@use "Shared/scss/templates/base/components/status-screen";
+
+@mixin initialize {
+    @include status-screen.initialize;
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin inline {
+    #{$select} {
+        &--inline {
+            --status-screen-background-color: transparent;
+
+            position: relative;
+            flex-direction: row;
+            align-items: center;
+
+            &[data-status-screen-state="problem"] {
+                --status-screen-font-color: var(--validate-invalid-font-color);
+            }
+
+            #{$select} {
+                &__screen {
+                    flex-direction: row;
+                    justify-content: flex-start;
+                }
+
+                &__status {
+                    font-size: 0.5em;
+                }
+
+                &__output {
+                    text-align: left;
+                }
+
+                &__close {
+                    display: none;
+                    position: relative;
+                    top: 0;
+                    right: 0;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin klaviyo-waitlist {
+    #{$select} {
+        &--klaviyo-waitlist {
+            position: absolute;
+            --status-screen-background-color: white;
+            --status-screen-font-color: black;
+
+            @media (prefers-color-scheme: dark) {
+                --status-screen-background-color: black;
+                --status-screen-font-color: white;
+            }
+
+            #{$select} {
+                &__close {
+                    display: none;
+                }
+            }
+
+            @content;
+        }
+    }
+}

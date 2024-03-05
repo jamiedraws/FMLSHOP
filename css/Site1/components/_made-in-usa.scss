@@ -1,0 +1,36 @@
+$select: ".made-in-usa" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+@mixin base {
+    #{$select} {
+        font-family: fonts.get(accent);
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: 1;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__header {
+            font-size: 0.75em;
+            max-width: 6em;
+        }
+
+        &__picture {
+            margin: 0.4em auto;
+        }
+
+        &__footer {
+            font-size: 0.6em;
+            max-width: 10em;
+        }
+
+        @content;
+    }
+}

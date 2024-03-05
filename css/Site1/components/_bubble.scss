@@ -1,0 +1,64 @@
+$select: ".bubble" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+$color1: #d9dff5;
+$color2: #5367b2;
+
+@mixin base {
+    #{$select} {
+        background: $color2;
+        color: white;
+        text-align: center;
+        font-size: 1em;
+        font-family: fonts.get(accent);
+        position: relative;
+        padding: 0.8em 1.6em;
+        margin: 0.4em 0;
+        border-radius: 2em;
+        line-height: 1;
+        display: inline-block;
+
+        &--alt {
+            background: $color1;
+            color: black;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0.1em;
+            width: 0;
+            height: 0;
+            $arrowSize: 0.6em;
+            border-top: $arrowSize solid transparent;
+            border-bottom: $arrowSize solid transparent;
+            border-left: $arrowSize solid $color2;
+        }
+
+        &--alt {
+            &::after {
+                border-left-color: $color1;
+            }
+        }
+
+        &--left {
+            &::after {
+                left: -0.1em;
+                transform: rotate(45deg);
+            }
+        }
+
+        &--right {
+            &::after {
+                right: -0.1em;
+                transform: rotate(-90deg);
+            }
+        }
+
+        @content;
+    }
+}

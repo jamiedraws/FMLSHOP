@@ -1,0 +1,42 @@
+$select: ".customer-service-address" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        @include background.color-map(colors.get(gray-light), colors.get(base));
+        padding: 1rem;
+
+        @include space.between-flow-elements() {
+        }
+
+        &__group {
+            @include group.contain;
+        }
+
+        &__title {
+            font-size: fonts.rem(25);
+            font-weight: bold;
+        }
+
+        &__address {
+            flex-grow: 1;
+            flex-basis: 15em;
+
+            font-style: normal;
+        }
+
+        &__detail {
+        }
+
+        @content;
+    }
+}

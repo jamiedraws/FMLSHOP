@@ -1,0 +1,36 @@
+$select: ".alternate-product-category" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        text-align: center;
+        text-transform: capitalize;
+
+        @include background.color-map(#3cb4e5, colors.get(light));
+
+        &__title {
+            font: 600 fonts.rem(50) / 1 fonts.get(accent);
+            text-transform: uppercase;
+        }
+
+        &__group {
+            @include group.contain;
+            justify-content: center;
+        }
+
+        &__title,
+        &__group {
+            margin: 2rem 0;
+        }
+
+        @content;
+    }
+}

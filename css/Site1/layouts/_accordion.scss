@@ -1,0 +1,140 @@
+$select: ".accordion" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// components
+@use "Shared/scss/templates/base/layouts/accordion";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/space";
+@use "./../abstracts/plus-minus-icon";
+
+@mixin base {
+    @include accordion.base;
+
+    #{$select} {
+        font-size: fonts.rem(18);
+
+        &__button[aria-expanded="true"]:focus,
+        &__button:focus {
+            outline-color: currentColor;
+        }
+
+        &--is-focused,
+        &:focus-within {
+            outline: none;
+        }
+
+        &__button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            word-break: break-word;
+        }
+
+        &__button,
+        &__link {
+            text-transform: uppercase;
+
+            border: 1px solid;
+
+            &[aria-expanded="true"] {
+                background: #b9b7af;
+            }
+        }
+
+        &__icon {
+            @include plus-minus-icon.icon;
+        }
+
+        &__button[aria-expanded="false"] > &__icon {
+            @include plus-minus-icon.plus;
+        }
+
+        &__button[aria-expanded="true"] > &__icon {
+            @include plus-minus-icon.minus;
+        }
+
+        @content;
+    }
+}
+
+@mixin tabs {
+    #{$select} {
+        &--tabs {
+            $border-color: #b9b7af;
+
+            #{$select} {
+                &__group {
+                    --gap: 0.75rem;
+
+                    display: flex;
+                    align-items: center;
+                    gap: var(--gap);
+                    overflow-x: auto;
+                    border-bottom: 1px solid;
+                    padding-bottom: var(--gap);
+
+                    text-align: center;
+                }
+
+                &__header {
+                    flex: 1 0 auto;
+                    display: flex;
+
+                    font: inherit;
+                }
+
+                &__content {
+                    padding: 1.5rem 0;
+
+                    @include space.between-flow-elements() {
+                    }
+                }
+
+                &__title {
+                    font-size: fonts.rem(25);
+                }
+
+                &__list {
+                    margin: 0;
+                    li {
+                        list-style: inherit;
+                        margin: 0.5em 0;
+                    }
+                    &--none {
+                        list-style: none;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin block-format {
+    #{$select} {
+        &--block-format {
+            > [itemscope] {
+                box-shadow: none;
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid;
+                    margin-bottom: 0;
+                }
+            }
+
+            #{$select} {
+                &__button {
+                    border: none;
+                }
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+$margin: 1em;
+
+@mixin base {
+        
+    .left {
+        float: left;
+        margin: $margin;
+        margin-left: 0;
+    }
+
+    .right {
+        float: right;
+        margin: $margin;
+        margin-right: 0;
+    }
+
+    @content;
+}

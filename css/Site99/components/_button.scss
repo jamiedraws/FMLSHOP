@@ -1,0 +1,71 @@
+$select: ".button" !default;
+
+// config
+@use "../config/colors";
+@use "../config/fonts";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/button";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        @include button.container;
+        @include button.structure {
+            padding: 0.75em 1.5em;
+
+            text-decoration: none;
+            text-transform: uppercase;
+
+            font-size: fonts.cascade-em(15);
+            font-family: inherit;
+        }
+
+        @include background.color-map(
+            $background-color: var(--main-background-color),
+            $text-color: var(--main-text-color)
+        ) {
+            border: 1px solid currentColor;
+
+            &::before {
+                background: var(--main-text-color);
+
+                transition: 0.3s ease-in-out;
+                transform: translate(3%, 10%);
+            }
+
+            &::after {
+                opacity: 1;
+                background: var(--main-background-color);
+            }
+
+            &:hover,
+            &:focus {
+                color: var(--main-background-color);
+
+                &::before {
+                    transform: translate(0);
+                }
+
+                &::after {
+                    opacity: 0;
+                }
+            }
+        }
+
+        @content;
+    }
+}
+
+@mixin circular {
+    #{$select} {
+        &--circular {
+            @include button.capsule-circular;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}

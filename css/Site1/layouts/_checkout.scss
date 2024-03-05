@@ -1,0 +1,71 @@
+$select: ".checkout" !default;
+$border-color: currentColor !default;
+$background: #fafafa !default;
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin box {
+    background: $background;
+    border: 1px solid $border-color;
+}
+
+@mixin base {
+    #{$select} {
+
+        &__banner {
+            @include box;
+            padding: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            font-family: inherit;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 1rem 0;
+        }
+
+        > #{$select}__banner {
+            margin: 2rem 0;
+        }
+
+        &__group {
+            @include group.contain;
+        }
+
+        @content;
+    }
+}
+
+@mixin cart {
+    #{$select}--cart {
+        @include box;
+        @include space.between-flow-elements(3rem) {
+        }
+        padding: 3rem;
+
+        hr {
+            background: $border-color;
+            border: 0;
+            height: 1px;
+            width: 100%;
+            display: block;
+        }
+    }
+}
+
+@mixin order-item {
+    #{$select}--order-item {
+        #{$select}__group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+
+            @include group.gutter(1rem);
+        }
+    }
+}

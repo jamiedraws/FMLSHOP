@@ -1,0 +1,73 @@
+$select: ".header" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 500;
+
+        &__in {
+            padding: 1rem;
+        }
+
+        &__banner {
+            background: var(--main-background-gradient);
+            padding: 1rem;
+        }
+
+        &__group {
+            @include group.contain;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        &__logo {
+            max-width: queries.em(108);
+            width: 100%;
+
+            a {
+                display: inline-block;
+            }
+        }
+
+        &__title {
+            flex-basis: auto;
+
+            font: 600 fonts.em(29) / 1.35 fonts.get(primary);
+            text-align: center;
+        }
+
+        &__action {
+            flex-basis: auto;
+        }
+
+        @media all and (max-width: queries.set(900)) {
+            &__logo {
+                font-size: 2vw;
+            }
+
+            &__action {
+                display: none;
+            }
+        }
+
+        button {
+            font: inherit;
+            color: currentColor;
+            font-style: italic;
+            text-decoration: underline;
+        }
+
+        @content;
+    }
+}

@@ -1,0 +1,66 @@
+$select: ".form-image-banner" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        &__in {
+            //padding-top: 0;
+            //padding-bottom: 0;
+        }
+
+        &__group {
+            @include group.contain;
+            overflow: visible;
+        }
+
+        &__form {
+            align-self: center;
+            flex-basis: 25rem;
+            flex-grow: 1;
+
+            position: relative;
+        }
+
+        &__image {
+            align-self: flex-end;
+            flex-basis: queries.rem(240);
+        }
+
+        @media all and (min-width: queries.set(1000)) {
+            @include background.color-map(
+                colors.get(highlight),
+                colors.get(light)
+            );
+
+            &__image {
+                margin: -3rem 0 0;
+            }
+        }
+
+        @media all and (max-width: queries.set(1000)) {
+            &__form {
+                flex-basis: 100%;
+                order: 1;
+
+                @include background.color-map(
+                    colors.get(highlight),
+                    colors.get(light)
+                );
+            }
+
+            &__image {
+                margin: 0 0 -3rem;
+            }
+        }
+
+        @content;
+    }
+}

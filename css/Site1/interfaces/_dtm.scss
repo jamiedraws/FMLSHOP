@@ -1,0 +1,87 @@
+// config
+@use "../config/colors";
+@use "../config/fonts";
+@use "../config/queries";
+
+// interfaces
+@use "Shared/css/template/shoppingcart/interfaces/dtm";
+
+// utils
+@use "Shared/css/template/dtm/utils/scope";
+
+// abstracts
+@use "Shared/css/template/base/abstracts/copy";
+@use "Shared/css/template/base/abstracts/background";
+
+@mixin base {
+    @include dtm.form;
+    @include dtm.review-table;
+    @include dtm.facebox;
+    @include dtm.remove-form-headline;
+    @include dtm.remove-fieldset-border;
+
+    @content;
+}
+
+@mixin page {
+    @include scope.for-template {
+        @include dtm.layout {
+            @include background.color-map(white, colors.get(base));
+        }
+        @include dtm.set-font-size;
+    }
+
+    @include dtm.process-payment;
+
+    @media all and (max-width: 47.5em) {
+        .dtm--custom .dtm__in--mv .orderItemsTable tbody td:nth-child(1) {
+            padding-left: 10rem;
+        }
+    }
+
+    @include upsell;
+
+    @content;
+}
+
+@mixin upsell {
+    .dtm .c-brand .p {
+        font-size: 16px;
+
+        @include copy.separate(1rem) {
+            display: block;
+        }
+    }
+
+    @content;
+}
+
+@mixin confirmation {
+}
+
+@mixin express-checkout {
+    @include dtm.express-checkout {
+        @include scope.for-template {
+            #{dtm.$select-checkout} {
+                padding: 0.5rem;
+                margin: 0.5rem;
+                flex: 1 1 100%;
+                flex-wrap: wrap;
+                overflow: visible;
+
+                [for="otCARD"] {
+                    img {
+                        flex: 0 0 3rem;
+                        max-width: 3rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .paypal__note {
+        flex: 1 1 100%;
+    }
+
+    @content;
+}

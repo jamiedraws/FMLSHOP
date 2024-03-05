@@ -1,0 +1,49 @@
+$select: ".instagram-display" !default;
+
+// config
+@use "./../config/queries";
+@use "./../config/colors";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        --instagram-grid-column: 3;
+        --instagram-grid-gap: 3px; // changed based on latest comp
+        --instagram-picture-size: #{queries.em(306)};
+
+        font-size: 0.75em;
+
+        @include background.color-map(
+            $background-color: #ededed,
+            $text-color: var(--main-text-color)
+        ) {
+        }
+
+        &__grid {
+            display: grid;
+            grid-template-columns:
+                var(--instagram-picture-size) var(--instagram-picture-size)
+                var(--instagram-picture-size);
+            gap: var(--instagram-grid-gap);
+
+            justify-content: center;
+        }
+
+        &__picture {
+            max-width: var(--instagram-picture-size);
+
+            img {
+                object-fit: cover;
+            }
+        }
+
+        @media all and (max-width: queries.set(760)) {
+            font-size: min(0.75em, 1.5vw);
+        }
+
+        @content;
+    }
+}

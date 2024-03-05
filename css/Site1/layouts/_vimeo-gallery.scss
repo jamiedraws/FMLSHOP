@@ -1,0 +1,61 @@
+$select: ".vimeo-gallery" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain($gutter: 0.5rem) {
+                flex: 1 1 20em;
+            }
+        }
+
+        &__item {
+            @include space.between-flow-elements($gap: 1rem) {
+            }
+        }
+
+        &__title {
+            margin-bottom: 1rem;
+        }
+
+        &__poster {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                box-shadow: 0 0 0.35em var(--main-text-color);
+                opacity: 0;
+            }
+        }
+
+        [id]:target ~ &__item {
+            #{$select} {
+                &__poster {
+                    &::before {
+                        opacity: 1;
+                    }
+                }
+
+                &__title {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        @content;
+    }
+}

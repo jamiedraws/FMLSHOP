@@ -1,0 +1,22 @@
+$select: ".customer-account-menubar" !default;
+
+// config
+@use "./../config/colors";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            display: flex;
+            flex-direction: column;
+            padding: 0.25em;
+        }
+
+        a {
+            padding: 0.5em 0.75em;
+            display: inline-block;
+            text-align: left;
+        }
+
+        @content;
+    }
+}

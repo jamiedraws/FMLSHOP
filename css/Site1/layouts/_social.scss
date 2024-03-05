@@ -1,0 +1,16 @@
+$select: ".social" !default;
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        &__group {
+            @include group.contain($gutter: 1rem) {
+            }
+            justify-content: center;
+        }
+
+        @content;
+    }
+}

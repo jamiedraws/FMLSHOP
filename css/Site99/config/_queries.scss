@@ -1,0 +1,17 @@
+@use "sass:map";
+
+@use "Shared/scss/templates/base/utils/unit-conversion" as convert;
+@forward "Shared/scss/templates/base/config/units";
+
+$list: (
+    section-max: convert.to-rem(666 * 2, $media: true),
+    document-mobile-portrait: convert.to-rem(900, $media: true)
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@function set($pixel) {
+    @return convert.to-rem($pixel, $media: true);
+}

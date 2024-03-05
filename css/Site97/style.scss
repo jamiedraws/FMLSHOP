@@ -1,0 +1,8 @@
+// interfaces
+@use "interfaces/app";
+@use "interfaces/page";
+
+@include app.critical;
+
+@include page.base;
+@include page.index;

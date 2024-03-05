@@ -1,0 +1,95 @@
+@use "sass:math";
+
+$select: ".hero" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/queries";
+
+@mixin base {
+    #{$select} {
+        // font-size: 2vmin;
+
+        --form-gap: 2em;
+
+        margin: auto;
+
+        &__group {
+            flex: 1;
+
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &__text {
+            flex: 0 1 44em;
+
+            padding: 2.5em;
+
+            text-align: center;
+
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        &__scroll-content {
+            position: sticky;
+            top: 0;
+        }
+
+        &__group-text {
+            display: flex;
+            flex-direction: column;
+            gap: var(--form-gap);
+        }
+
+        &__standfirst {
+            font-size: fonts.em(30);
+        }
+
+        &__callout {
+            font-size: fonts.em(20);
+
+            max-width: 25em;
+            margin: auto;
+        }
+
+        &__picture {
+            flex: 0 1 queries.em(500);
+
+            > img {
+                object-fit: cover;
+            }
+        }
+
+        @media all and (max-width: queries.set(1080)) {
+            @media all and (orientation: portrait) {
+                margin: 0;
+
+                &__group {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+
+                &__picture {
+                    // flex-basis: 100%;
+                    order: -1;
+                }
+            }
+
+            @media all and (orientation: landscape) {
+                &__picture {
+                    flex-basis: 34em;
+                }
+            }
+        }
+
+        @media all and (max-device-width: queries.set(1080)) {
+            font-size: 2.75vmin;
+        }
+
+        @content;
+    }
+}

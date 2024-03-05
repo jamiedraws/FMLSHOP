@@ -1,0 +1,13 @@
+$select: ".optanon-toggle-display" !default;
+
+@mixin base {
+    #{$select} {
+        font: inherit;
+        color: inherit;
+        text-transform: inherit;
+        text-align: left;
+        word-break: break-word;
+
+        @content;
+    }
+}

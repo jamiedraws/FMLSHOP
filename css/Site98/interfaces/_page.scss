@@ -1,0 +1,23 @@
+// utils
+
+// components
+
+// layouts
+@use "./../layouts/hero";
+
+@mixin base {
+    // components
+
+    @content;
+}
+
+@mixin index {
+    // utils
+
+    // components
+
+    // layouts
+    @include hero.base;
+
+    @content;
+}

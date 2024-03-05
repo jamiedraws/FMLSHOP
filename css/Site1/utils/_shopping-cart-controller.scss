@@ -1,0 +1,13 @@
+@mixin state {
+    button[data-shopping-cart-product-code]:not([disabled]) {
+        cursor: pointer;
+    }
+
+    [disabled][data-shopping-cart-state="processing"] {
+        cursor: wait;
+    }
+
+    [disabled][data-shopping-cart-state="disable"] {
+        cursor: not-allowed;
+    }
+}

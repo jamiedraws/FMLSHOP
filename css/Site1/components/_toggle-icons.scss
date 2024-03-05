@@ -1,0 +1,21 @@
+$select: ".toggle-icons" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// components
+@use "Shared/css/template/shoppingcart/components/toggle-icons";
+
+@mixin base {
+    @include toggle-icons.new;
+
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin checkbox($select: $select) {
+    @include toggle-icons.checkbox("#{$select}__toggle", scale(0), scale(0.75));
+}

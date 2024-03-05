@@ -1,0 +1,71 @@
+$select: ".section" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// utils
+@use "Shared/scss/templates/base/utils/section" with (
+    $container: queries.get(section-max),
+    $frame: 1rem
+);
+
+@mixin base {
+    @include section.base {
+        --section-block-margin: 5rem;
+
+        &__frame {
+            padding: #{section.$frame};
+        }
+
+        &__block {
+            margin: var(--section-block-margin, 5rem) 0;
+        }
+
+        &[aria-labelledby="mission-title"],
+        &[aria-labelledby="reviews-title"],
+        &[aria-label*="blog"] {
+            --section-block-margin: 7rem;
+        }
+
+        &[aria-labelledby="main-blog-title"] {
+            --section-block-margin: 7rem;
+        }
+
+        &[aria-labelledby="account-title"] {
+            --section-block-margin: 3rem;
+        }
+
+        &[aria-labelledby="customer-login-title"] {
+            --section-block-margin: 2rem;
+        }
+
+        @media all and (max-width: queries.get(document-mobile-portrait)) {
+            --section-block-margin: 2rem;
+
+            &[aria-labelledby="mission-title"],
+            &[aria-labelledby="reviews-title"],
+            &[aria-label*="blog"] {
+                --section-block-margin: 3rem;
+            }
+        }
+    }
+
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin breadcrumb {
+    #{$select} {
+        &--breadcrumb {
+            padding-top: 3rem;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+@mixin call-out {
+    font-weight: 400;
+    text-transform: uppercase;
+    color: colors.get(accent-light);
+    letter-spacing: 0.25em;
+    line-height: 1;
+}

@@ -1,0 +1,76 @@
+@use "sass:map";
+
+$list: (
+    base: #411f18,
+    base-light: white,
+    base-dark: black,
+    first: #b9b7af,
+    first-dark: #3f2017
+);
+
+$primary: (
+    warm-rose: hsl(12, 100%, 85%),
+    warm-rose-contrast: hsl(5, 98%, 77%),
+    warm-rose-hue-1: hsl(12, 100%, 95%),
+    warm-rose-hue-2: hsl(9, 97%, 88%),
+    warm-rose-hue-5: hsl(10, 97%, 77%),
+    warm-rose-hue-6: hsl(12, 53%, 70%),
+    cream: hsl(30, 100%, 91%),
+    cream-contrast: hsl(31, 89%, 69%),
+    latte: hsl(17, 58%, 86%),
+    latte-contrast: hsl(16, 36%, 71%),
+    latte-hue-1: hsl(27, 47%, 96%),
+    latte-hue-2: hsl(14, 54%, 92%),
+    latte-hue-6: hsl(15, 39%, 69%),
+    cool-rose: hsl(346, 100%, 92%),
+    cool-rose-contrast: hsl(339, 51%, 79%),
+    cool-rose-hue-1: hsl(354, 100%, 98%),
+    stormcloud: hsl(278, 10%, 69%),
+    stormcloud-hue-3: hsl(278, 10%, 69%),
+    stormcloud-hue-2: hsl(278, 16%, 86%),
+    stormcloud-hue-1: hsl(280, 30%, 96%)
+);
+
+$accent: (
+    warm-rose-tint: hsl(13, 100%, 96%),
+    warm-rose-tint-contrast: hsl(8, 93%, 84%),
+    latte-tint: hsl(24, 56%, 96%),
+    latte-tint-contrast: hsl(15, 31%, 80%)
+);
+
+$secondary: (
+    stormcloud: hsl(277, 10%, 74%),
+    stormcloud-contrast: hsl(236, 46%, 93%),
+    dark-moss: hsl(160, 7%, 24%),
+    dark-moss-contrast: hsl(113, 13%, 52%)
+);
+
+$primary-type: (
+    black: hsl(0, 0%, 15%),
+    black-contrast: hsl(0, 0%, 80%),
+    dark-gray: hsl(270, 2%, 25%),
+    dark-gray-contrast: hsl(0, 0%, 84%),
+    light-gray: hsl(0, 0%, 95%),
+    white: hsl(0, 0%, 100%),
+    white-contrast: hsl(0, 0%, 37%)
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@function primary($name) {
+    @return map.get($primary, $name);
+}
+
+@function secondary($name) {
+    @return map.get($secondary, $name);
+}
+
+@function primary-type($name) {
+    @return map.get($primary-type, $name);
+}
+
+@function accent($name) {
+    @return map.get($accent, $name);
+}

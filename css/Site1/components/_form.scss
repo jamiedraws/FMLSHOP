@@ -1,0 +1,319 @@
+$select: ".form" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// components
+@use "Shared/scss/templates/base/components/form";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/space";
+
+@mixin base {
+    @include form.base;
+
+    #{$select} {
+        text-align: left;
+
+        &__field {
+            min-height: queries.em(60);
+            @media all and (max-width: queries.get(document-mobile-portrait)) {
+                &[data-prepopulate-address] {
+                    max-width: 93vw;
+                }
+            }
+        }
+
+        & &__label &__link {
+            text-decoration: underline;
+        }
+
+        @content;
+    }
+}
+
+@mixin cvv {
+    #{$select} {
+        &__cvv #{$select}__link {
+            font-size: inherit;
+        }
+    }
+}
+
+@mixin field-label {
+    @include form.field-label;
+
+    #{$select} {
+        &__field-label {
+            align-items: flex-start;
+
+            label {
+                font-size: inherit;
+                text-align: left;
+            }
+
+            #{$select} {
+            }
+
+            [role="alert"] {
+                font-size: max(16px, 0.9em);
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin username-password {
+    #{$select} {
+        &--username-password {
+            #{$select} {
+                &__username {
+                    margin-left: 0.75rem;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin label-combobox {
+    @include form.label-combobox;
+
+    #{$select} {
+        &--label-combobox {
+            @include group.gutter(0.5em);
+
+            #{$select} {
+                &__label {
+                    margin-right: 0;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin label-combobox--left {
+    #{$select} {
+        &--label-combobox {
+        }
+    }
+}
+
+@mixin icon-field-combobox {
+    @include form.icon-field-combobox;
+
+    #{$select} {
+        &--icon-field-combobox {
+            flex: 1;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            #{$select} {
+                &__label {
+                    flex-basis: 100%;
+                    align-self: center;
+
+                    display: flex;
+
+                    &[data-variant-product-color-name] {
+                        align-self: stretch;
+                        align-items: center;
+
+                        &::before {
+                            content: "";
+                            display: block;
+                            width: 0.5em;
+                            flex: 0 0 0.5em;
+                            align-self: stretch;
+                            margin-right: 1em;
+                        }
+                    }
+
+                    &[data-variant-product-color-name="parisian-blue"]::before {
+                        background: #8aa3b4;
+                    }
+
+                    &[data-variant-product-color-name="blush"]::before {
+                        background: #efc7c5;
+                    }
+
+                    &[data-variant-product-color-name="lavender"]::before {
+                        background: #d2b9db;
+                    }
+                }
+
+                &__field {
+                    padding: 0.5em;
+                }
+
+                &__input {
+                    flex-basis: 1em;
+                    width: 1em;
+                    font-size: inherit;
+                }
+
+                &__contain {
+                    font-size: 0.9em;
+                    border-radius: 0;
+
+                    flex-basis: 10em;
+                }
+
+                &__button,
+                &__field,
+                &__contain {
+                    min-height: 2em;
+                }
+
+                &__button {
+                    max-width: 3em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin checkbox {
+    #{$select} {
+        @include form.checkbox;
+
+        &--checkbox {
+            [role="alert"] {
+                flex: 1 1 100%;
+
+                > * {
+                    margin-top: 0.5rem;
+                }
+            }
+
+            #{$select} {
+                &__label {
+                    flex: 1;
+                }
+
+                &__label-text {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+
+                &__checkbox {
+                    transform: scale(0.9);
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin search {
+    #{$select} {
+        &--search {
+            #{$select} {
+                &__contain > button {
+                    flex-grow: 0;
+                    flex-basis: 10em;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin underline {
+    @include form.underline;
+
+    #{$select} {
+        &--underline {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin field-icon {
+    @include form.field-icon;
+
+    #{$select} {
+        &--field-icon {
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin select {
+    @include form.select;
+
+    #{$select} {
+        &--select {
+            #{$select} {
+                &__button > svg {
+                    transform: rotate(0.75turn);
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin field-button {
+    #{$select} {
+        &--field-button {
+            #{$select} {
+                &__contain {
+                    @include form.field-button(
+                        $input-basis: 10em,
+                        $button-basis: 6em
+                    ) {
+                        border: 1px solid var(--color-first);
+                        padding: 2px;
+                        background: white;
+                    }
+                }
+
+                &__button {
+                    padding: 0.75em;
+                    border-radius: 0;
+                }
+            }
+
+            @content;
+        }
+    }
+}
+
+@mixin promo-code {
+    #{$select} {
+        &--promo-code {
+            button {
+                flex-basis: 10em;
+            }
+
+            input {
+                flex-basis: 10em;
+            }
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}

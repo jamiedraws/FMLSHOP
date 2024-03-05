@@ -1,0 +1,34 @@
+// utils
+@use "Shared/scss/templates/base/utils/scope";
+@use "./../utils/contain";
+
+// components
+@use "./../components/button";
+@use "./../components/features-benefits";
+@use "./../components/list";
+
+// layouts
+@use "./../layouts/product-card";
+@use "./../layouts/product-cards";
+
+@mixin base {
+    // components
+    @include button.base;
+    @include list.base;
+
+    @content;
+}
+
+@mixin index {
+    // utils
+    @include contain.base;
+
+    // components
+    @include features-benefits.base;
+
+    // layouts
+    @include product-card.base;
+    @include product-cards.base;
+
+    @content;
+}

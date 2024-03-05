@@ -1,0 +1,27 @@
+$select: ".toast" !default;
+
+// components
+@use "Shared/scss/templates/base/components/toast";
+
+@mixin base {
+    @include toast.base;
+
+    #{$select} {
+        @content;
+    }
+}
+
+@mixin polite {
+    @include toast.polite;
+
+    #{$select} {
+        &--polite {
+            bottom: 6rem;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+@use "sass:map";
+@use "sass:math";
+
+@forward "Shared/scss/templates/base/config/units";
+
+$list: (
+    base: (
+        Arial,
+        Helvetica,
+        sans-serif
+    ),
+    primary: (
+        proxima-nova,
+        Helvetica,
+        sans-serif
+    ),
+    secondary: (
+        proxima-nova-extra-condensed,
+        Helvetica,
+        sans-serif
+    )
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}

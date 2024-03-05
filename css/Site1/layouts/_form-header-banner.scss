@@ -1,0 +1,40 @@
+$select: ".form-header-banner" !default;
+
+// config
+@use "./../config/fonts";
+@use "./../config/colors";
+@use "./../config/queries";
+
+// layouts
+@use "Shared/scss/templates/base/abstracts/group";
+
+@mixin base {
+    #{$select} {
+        padding: 1rem;
+
+        &__group {
+            @include group.contain;
+        }
+
+        &__header {
+            flex-basis: 31rem;
+            text-transform: uppercase;
+
+            margin-bottom: 1rem;
+
+            line-height: 1;
+        }
+
+        &__field {
+            flex-grow: 1;
+            flex-basis: 15rem;
+        }
+
+        &__button {
+            flex-basis: auto;
+            align-self: flex-start;
+        }
+
+        @content;
+    }
+}

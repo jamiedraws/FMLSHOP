@@ -1,0 +1,133 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<ClientSiteViewData>" %>
+<%@ Import Namespace="Dtm.Framework.ClientSites" %>
+<%@ Import Namespace="Dtm.Framework.Base.Models" %>
+<%@ Import Namespace="FMLSHOP.CampaignProduct" %>
+<%@ Import Namespace="FMLSHOP.CategoryRouter" %>
+<%@ Import Namespace="FMLSHOP.Extensions" %>
+<%@ Import Namespace="FMLSHOP.PromoCodeHelper" %>
+<%@ Import Namespace="FMLSHOP.Utils" %>
+
+<% 
+    // the product name
+    var productName = SettingsManager.ContextSettings["Label.ProductName"];
+
+    // instance provided by the controller
+    var categoryProductRouterEngine = ViewData["CategoryProductRouterEngine"] as CategoryProductRouterEngine ?? new CategoryProductRouterEngine();
+
+    // the current campaign category's parent campaign category
+    var parentCategory = ViewData["ParentCategory"] as CategoryView ?? new CategoryView();
+
+    // the route to the current campaign category's parent category, referred to as the product category page
+    var productCategoryRoute = ViewData["ProductCategoryRoute"] as string ?? string.Empty;
+
+    // the route to the current campaign category, referred to as the product listing page
+    var productListingRoute = ViewData["ProductListingRoute"] as string ?? string.Empty;
+
+    // the current campaign category
+    var category = ViewData["Category"] as CategoryView ?? new CategoryView();
+
+    // the current product category name
+    var categoryName = string.Format("{0} | {1}", category.Name, productName);
+
+    // the list of category product router objects that are associated with the current campaign category
+    var categoryProducts = ViewData["CategoryProducts"] as List<CategoryProductRouter> ?? new List<CategoryProductRouter>();
+
+    // determines whether the current campaign product was found
+    var currentProductNotFound = ViewData["CurrentProductNotFound"] as bool? ?? false;
+
+    // the images associated with the current campaign category
+    var categoryImages = new CategoryImages(category.Code, "/images/Site1/categories/" + category.Code);
+
+    Func<string, bool> isCategory = ((string categoryCode) =>
+    {
+        return category.Code.Equals(categoryCode);
+    });
+%>
+
+<!DOCTYPE html>
+<html id="dtm" lang="en" class="dtm">
+  
+	<head>
+
+		<title><%= categoryName %></title>
+
+        <% 
+            Html.RenderPartial("MetaFavicon", new ViewDataDictionary
+            {
+                { "Title", categoryName },
+                { "Description", category.Description },
+                { "Url", productListingRoute },
+                { "Image", categoryImages.SetFirstImageOrDefault("/images/social/share-banner.png") }
+            });
+
+            ResourceWriter resourceWriter = new ResourceWriter();
+
+			Html.RenderPartial("GetVersionStyles", new ViewDataDictionary { { "ResourceWriter", resourceWriter } });
+
+			Response.Write(resourceWriter.WriteStylePreload("css/Site1/product-listing-page.css"));
+			Response.Write(resourceWriter.WriteLink("css/Site1/product-listing-page.css"));
+        %>
+
+		<asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+	</head>
+
+	<body class="dtm__in">
+
+		<%= Html.Partial("Header") %>
+
+        <% if (currentProductNotFound) { %>
+            <section aria-label="Product Not Found" class="view info section">
+                <div class="view__in section__in">
+                    <p>We're sorry but we couldn't find the product you were looking for. We hope the related products below will help you find what you're looking for.</p>
+                </div>
+            </section>
+        <% } %>
+
+        <main aria-labelledby="main-title" class="view product-grid product-grid--listing section">
+            <div id="main" class="view__anchor"></div>
+            <div class="view__in section__in">
+                <div class="product-grid__header">
+                    <%
+                        var parentCategoryName = parentCategory.Name ?? string.Empty;
+                    %>
+                    <h1 id="main-title" class="product-grid__title"><%= category.Name %></h1>
+                    <asp:ContentPlaceHolder ID="DescriptionAboveGrid" runat="server"></asp:ContentPlaceHolder>
+                </div>
+                <div class="section__block">
+                    <div class="product-grid__group">
+                    <%
+                        categoryProducts = categoryProducts.Where(cp => cp.CampaignProduct.IsProductLive()).ToList();
+
+                        foreach (var categoryProduct in categoryProducts)
+                        {
+                            var index = categoryProducts.IndexOf(categoryProduct);
+
+                            Html.RenderPartial("CategoryProduct", new ViewDataDictionary
+                            {
+                                { "CategoryProductRouterEngine", categoryProductRouterEngine },
+                                { "CategoryProduct", categoryProduct },
+                                { "Category", category.Code },
+                                { "Index", index }
+                            });
+                        }
+                    %>
+                    </div>
+                    <%= Html.Partial("PaginateList") %>
+                </div>
+                <a href="<%= productCategoryRoute %>" class="button button--view-products">View All <%= parentCategoryName %></a>
+                <div class="section__block product-grid__copy">
+                    <asp:ContentPlaceHolder ID="DescriptionBelowGrid" runat="server"></asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </main>
+
+        <%= Html.Partial("EmailOptIn") %>
+
+		<%= Html.Partial("Footer") %>
+
+        <%= Html.Partial("GetVersionScripts") %>
+
+	</body>
+
+</html>

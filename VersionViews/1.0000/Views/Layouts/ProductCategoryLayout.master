@@ -1,0 +1,202 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<ClientSiteViewData>" %>
+<%@ Import Namespace="Dtm.Framework.ClientSites" %>
+<%@ Import Namespace="Dtm.Framework.Base.Models" %>
+<%@ Import Namespace="FMLSHOP.CategoryRouter" %>
+<%@ Import Namespace="FMLSHOP.Classes" %>
+<%@ Import Namespace="FMLSHOP.Extensions" %>
+<%@ Import Namespace="FMLSHOP.Utils" %>
+<%@ Import Namespace="FMLSHOP.PromoCodeHelper" %>
+<%@ Import Namespace="FMLSHOP.LimitedTimeOffer" %>
+
+<%
+    // the product name
+    var productName = SettingsManager.ContextSettings["Label.ProductName"];
+
+    // the instance provided by the controller
+    var categoryProductRouterEngine = ViewData["CategoryProductRouterEngine"] as CategoryProductRouterEngine ?? new CategoryProductRouterEngine();
+
+    // the current campaign category, referred to as the parent category
+    var parentCategory = ViewData["ParentCategory"] as CategoryView ?? new CategoryView();
+
+    // the current page title
+    var productTitle = string.Format("{0} | {1}", parentCategory.Name, productName);
+
+    // the current page description
+    var productDescription = DtmContext.Page.MetaDescription ?? parentCategory.Description;
+
+    // the route to the parent category, referred to as the product category page
+    var productCategoryRoute = ViewData["ProductCategoryRoute"] as string ?? string.Empty;
+
+    // the list of campaign categories that are children of the current parent category
+    var categories = ViewData["Categories"] as List<CategoryView> ?? new List<CategoryView>();
+
+    // the list of category products provided by the controller
+    var categoryProducts = ViewData["CategoryProducts"] as List<CategoryProductRouter> ?? new List<CategoryProductRouter>();
+
+    // determines whether the parent category was found
+    var currentCategoryNotFound = ViewData["CurrentCategoryNotFound"] as bool? ?? false;
+
+    // the images associated with the parent category
+    var parentCategoryImages = new CategoryImages(parentCategory.Code);
+
+    Func<string, bool> isCategory = ((string categoryCode) =>
+    {
+        return parentCategory.Code.Equals(categoryCode);
+    });
+
+    bool categoryLandingPage = HttpContext.Current.Request.Url.AbsolutePath.Contains("/solutions");
+%>
+
+<!DOCTYPE html>
+<html lang="en" class="dtm">
+  
+	<head>
+
+        <title><%= productTitle %></title>
+
+        <% 
+            Html.RenderPartial("MetaFavicon", new ViewDataDictionary
+            {
+                { "Title", productTitle },
+                { "Description", productDescription },
+                { "Url", productCategoryRoute },
+                { "Image", parentCategoryImages.SetFirstImageOrDefault("/images/social/share-banner.png") }
+            });
+
+            ResourceWriter resourceWriter = new ResourceWriter();
+
+			Html.RenderPartial("GetVersionStyles", new ViewDataDictionary { { "ResourceWriter", resourceWriter } });
+
+			Response.Write(resourceWriter.WriteStylePreload("css/Site1/product-category-page.css"));
+			Response.Write(resourceWriter.WriteLink("css/Site1/product-category-page.css"));
+        %>
+
+		<asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+	</head>
+
+	<body class="dtm__in">
+
+		<%= Html.Partial("Header") %>
+
+        <%
+            FathersDayOffer fathersDay = new FathersDayOffer();
+            
+            if (fathersDay.IsActive) 
+            { %>
+        <div class="slide slide--fade slide--hero" data-carousel-config='{ "delay" : 3000, "auto" : false }'>
+            <div class="slide__into" tabindex="0" id="hero-slider">
+                <div class="slide__item slide__item--current">
+                    <section aria-label="Buy 2 Get 1 Free. Hurry While Supplies Last" class="hero hero--headline-with-image">
+                        <div class="view__in hero__in section__in">
+                            <picture class="hero__media">
+                                <img src="/images/Site1/hero-banners/promos/buy2get1.gif" loading="lazy" alt="" width="2296" height="879">
+                            </picture>
+                        </div>
+                    </section>
+                </div>
+                <div class="slide__item">
+                    <section aria-label="Men and Father's alike enjoying <%= productName %>" class="hero hero--headline-with-image">
+                        <div class="view__in hero__in section__in">
+                            <picture class="hero__media">
+                                <source srcset="/images/Site1/hero-banners/fml-fathers-day.webp" type="image/webp">
+                                <img src="/images/Site1/hero-banners/fml-fathers-day.jpg" loading="lazy" alt="" width="1920" height="747">
+                            </picture>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <% } 
+            else 
+            { %>
+        <section aria-label="Brand Animation" class="hero hero--headline-with-image" data-hero-vimeo-id="812045985">
+            <div class="view__in hero__in section__in">
+                <div class="hero__media">
+                    <div class="contain contain--hero-shop-all-banner">
+                        <iframe src="https://player.vimeo.com/video/812045985?h=1e87de48bd&amp;loop=1&amp;background=1&amp;app_id=122963" width="1440" height="343" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" title="Brand Animation Video"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>        
+        <% }
+        %>
+
+        <% if (currentCategoryNotFound) { %>
+            <section aria-label="Category Not Found" class="view info section">
+                <div class="view__in section__in">
+                    <p>We're sorry but we couldn't find the category you were looking for. We hope the related categories below will help you find what you're looking for.</p>
+                </div>
+            </section>
+        <% } %>
+
+        <%
+            var alternateParentCategories = categoryProductRouterEngine.GetAlternateParentCategories(parentCategory);
+
+            foreach (var alternateParentCategory in alternateParentCategories)
+            {
+                var alternateProductCategoryRoute = categoryProductRouterEngine.CreateRouteToProductCategoryPage(alternateParentCategory.RedirectUrl);
+
+                %>
+
+                <nav aria-labelledby="<%= alternateParentCategory.Code %>" class="view alternate-product-category section">
+                    <div class="view__in section__in">
+                        <h2 class="alternate-product-category__title">Shop By <%= alternateParentCategory.Name %></h2>
+
+                        <div class="alternate-product-category__group">
+                            <%
+                                var alternateCategories = categoryProductRouterEngine.GetChildCategoriesByParentCategory(alternateParentCategory);
+
+                                foreach (var alternateCategory in alternateCategories)
+                                {
+                                    var alternateProductListingRoute = categoryProductRouterEngine.CreateRouteToProductListingPage(alternateProductCategoryRoute, alternateCategory);
+
+                                    %>
+                                    <a href="<%= alternateProductListingRoute %>" class="alternate-product-category__link"><%= alternateCategory.Name %></a>
+                                    <%
+                                } 
+                            %>
+                        </div>
+                    </div>
+                </nav>
+                <%
+            }
+        %>
+
+        <main class="view product-grid product-grid--category product-grid--listing section">
+            <div id="main" class="view__anchor"></div>
+            <div class="view__in section__in">
+                <h2 class="product-grid__header">All Products</h2>
+                <div class="section__block">
+                    <div class="product-grid__group">
+                    <%
+                        foreach (var categoryProduct in categoryProducts)
+                        {
+                            var index = categoryProducts.IndexOf(categoryProduct);
+
+                            Html.RenderPartial("CategoryProduct", new ViewDataDictionary
+                            {
+                                { "CategoryProductRouterEngine", categoryProductRouterEngine },
+                                { "CategoryProduct", categoryProduct },
+                                { "Category", categoryProduct.CampaignCategory.Code },
+                                { "Index", index }
+                            });
+                        }
+                    %>
+                    </div>
+                </div>
+            </div>
+            <%= Html.Partial("PaginateList") %>
+        </main>
+
+		<asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+
+        <%= Html.Partial("EmailOptIn") %>
+
+		<%= Html.Partial("Footer") %>
+
+        <%= Html.Partial("GetVersionScripts") %>
+
+	</body>
+
+</html>

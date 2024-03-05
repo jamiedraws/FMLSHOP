@@ -1,0 +1,32 @@
+$select: ".banner" !default;
+
+// config
+@use "./../config/fonts";
+
+// components
+@use "Shared/scss/templates/base/components/banner" with (
+    $select: $select,
+    $color: var(--main-text-color)
+);
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        @include background.color-map(var(--color-first), white);
+
+        text-align: center;
+        font-size: 1.875em;
+        padding: 1em 0.5em;
+
+        @content;
+    }
+
+    @include ribbon;
+}
+
+@mixin ribbon {
+    @include banner.base;
+    @include banner.ribbon;
+}

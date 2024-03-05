@@ -1,0 +1,113 @@
+$select: ".logo-title-hero" !default;
+
+// config
+@use "./../config/colors";
+@use "./../config/fonts";
+@use "./../config/queries";
+
+// abstracts
+@use "Shared/scss/templates/base/abstracts/group";
+@use "Shared/scss/templates/base/abstracts/background";
+
+@mixin base {
+    #{$select} {
+        text-align: center;
+
+        &__group {
+            @include group.contain(1rem);
+
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        &__logo {
+            flex-basis: queries.em(240);
+            font-size: 1rem;
+
+            display: flex;
+            justify-content: center;
+        }
+
+        &__logo > img {
+            max-width: queries.em(240);
+        }
+
+        &__title {
+            font-size: fonts.rem(50);
+            text-align: center;
+            text-transform: uppercase;
+
+
+            sup {
+                font-size: 0.4em;
+                bottom: 0.25em;
+            }
+
+            @media screen and (max-width: 750px) {
+                font-size: fonts.rem(35);
+            }
+        }
+
+        h1 > &__logo,
+        h2 > &__logo {
+            // flex-basis: 7.5em;
+        }
+
+        &__text {
+            flex-basis: 100%;
+        }
+
+        @content;
+    }
+}
+
+@mixin page-banner {
+    #{$select} {
+        &--page-banner {
+            @include background.color-map(
+                colors.get(first),
+                colors.get(first-dark)
+            );
+
+            padding: queries.rem(40) 1rem;
+
+            #{$select} {
+            }
+
+            @content;
+        }
+        &--shrink {
+            padding: 2rem 1rem;
+        }
+    }
+}
+
+@mixin for-emma {
+    #{$select} {
+        &--for-emma {
+            #{$select} {
+                &__logo {
+                }
+            }
+
+            @media all and (max-width: queries.set(620)) {
+                #{$select} {
+                    &__group {
+                        @include group.gutter(
+                            $gutter-contract: 0.5rem,
+                            $gutter-expand: 0.5rem
+                        ) {
+                        }
+                    }
+
+                    &__logo {
+                        order: -1;
+                        flex-basis: 100%;
+                    }
+                }
+            }
+
+            @content;
+        }
+    }
+}

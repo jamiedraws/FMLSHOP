@@ -1,0 +1,9 @@
+$select: ".out-of-stock" !default;
+
+@mixin base {
+    #{$select} {
+        margin: 0;
+
+        @content;
+    }
+}

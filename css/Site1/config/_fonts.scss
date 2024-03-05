@@ -1,0 +1,24 @@
+@use "sass:map";
+
+@forward "Shared/scss/templates/base/config/units";
+
+$list: (
+    primary: (
+        arboria,
+        Helvetica,
+        sans-serif
+    ),
+    secondary: (
+        arboria,
+        Helvetica,
+        sans-serif
+    ),
+    tertiary: (
+        arboria,
+        serif
+    )
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}

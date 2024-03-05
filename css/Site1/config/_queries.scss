@@ -1,0 +1,19 @@
+@use "sass:map";
+
+@use "Shared/scss/templates/base/config/units" as _units;
+@forward "Shared/scss/templates/base/config/units";
+
+$list: (
+    section-max: _units.rem(1200, $media: true),
+    navbar: _units.rem(1200, $media: true),
+    document-mobile-portrait: _units.rem(640, $media: true),
+    reviews: _units.rem(1000, $media: true)
+);
+
+@function get($name) {
+    @return map.get($list, $name);
+}
+
+@function set($pixel) {
+    @return _units.rem($pixel, $media: true);
+}
